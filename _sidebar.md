@@ -1,3 +1,2 @@
-- [.git](.git/)
 - [MLsys](MLsys/)
 - [README](README.md)
