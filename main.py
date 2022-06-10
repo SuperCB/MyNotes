@@ -1,44 +1,163 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import functools
 import os
+import platform
+import shutil
 
 
-def generateMenu(path):
-    dir_list = os.listdir(path)
+def strcmp(stra, strb) -> bool:
+    import re
 
-    with open(os.path.join(path, '_sidebar.md'), 'w', encoding='utf-8') as slider:
-        for cur_file in dir_list:
-            cur_path = os.path.join(path, cur_file)
-            if os.path.isfile(cur_path):
-                # name = cur_file.split(".")[0]
-                type_ = cur_file.split(".")[-1]
-                print(type_)
-                if type_ != 'md':
-                    continue
+    stra = re.sub('[\u4e00-\u9fa5]', '', stra)  # 去除字符串之中的中文
+    strb = re.sub('[\u4e00-\u9fa5]', '', strb)  # 去除字符串之中的中文
 
-                if cur_file[0]=='_':
-                    continue
-                if cur_file == '_sidebar.md' or cur_file == "RAEDME.md":
-                    continue
-                slider.write('- [%s](%s)\n' % (cur_file[:-3], cur_file))
-                print("{0} : is file!".format(cur_path))
-            elif os.path.isdir(cur_path):
-                if cur_file[0] == '_':
-                    continue
-                if cur_file == 'img' or cur_file == 'src' or cur_file == '.git':
-                    continue
-                slider.write('- [%s](%s/)\n' % (cur_file, cur_file))
-                generateMenu(cur_path)
-                print("{0} : is dir!".format(cur_file))
-    # with open(os.path.join(path, 'README.md'), 'w', encoding='utf-8') as readme:
-    #     readme.write(path)
+    i, j = 0, 0
+    while i < len(stra) and j < len(strb):
+        if stra[i] < strb[j]:
+            return False
+        elif stra[i] > strb[j]:
+            return True
+        else:
+            pass
+
+        i += 1
+        j += 1
+
+    if i == len(stra):
+        return True
+
+    if j == len(strb):
+        return False
+
+
+def tree(basepath: list, path, lev):
+    item_list = os.listdir(path)
+    # print(item_list)
+    dirlist = []
+    filelist = []
+    for item_name in item_list:
+        item_path = os.path.join(path, item_name)
+        if os.path.isfile(item_path):
+            # markdown文件
+            # print(item_path)
+            type_ = item_name.split(".")[-1]
+            if type_ != 'md':
+                continue
+            if item_name[0] == '_':
+                continue
+            if item_name == 'README.md':
+                continue
+            filelist.append(item_name)
+        elif os.path.isdir(item_path):
+            if item_name[0] == '_' or item_name[0] == '.':
+                continue
+            dirlist.append(item_name)
+
+    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
+    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
+    result = []
+
+    for dir in dirlist:
+        print(basepath)
+        new_basepath = basepath + [dir]
+        print(new_basepath)
+        item = (dir, '/'.join(new_basepath) + '/', lev)
+
+        result.append(item)
+
+        result += tree(new_basepath, os.path.join(path, dir), lev + 1)
+
+    for file in filelist:
+        new_basepath = basepath + [file]
+        item = (file[:-3], '/'.join(new_basepath), lev)
+        result.append(item)
+
+    return result
+
+
+def writesidebar(path, ans):
+    if platform.system().lower() == 'windows':
+        with open(os.path.join(path, '_sidebar.md'), 'w', encoding='utf-8') as sider:
+            for item in ans:
+                sider.write('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], item[1]))
+                sider.write('\n')
+                # print('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], file_path))
+        # print(item[1].split('\\'))
+
+    elif platform.system().lower() == 'linux':
+        pass
+
+
+def main(path):
+    writesidebar(path, tree([], path, 0))
+
+    item_list = os.listdir(path)
+    # print(item_list)
+    dirlist = []
+    filelist = []
+    for item_name in item_list:
+        item_path = os.path.join(path, item_name)
+        if os.path.isfile(item_path):
+            # markdown文件
+            # print(item_path)
+            type_ = item_path.split(".")[-1]
+            if type_ != 'md':
+                continue
+            if item_path[0] == '_':
+                continue
+            if item_path == 'README.md':
+                continue
+            filelist.append(item_path)
+        elif os.path.isdir(item_path):
+            if item_name[0] == '_' or item_name[0] == '.':
+                continue
+            dirlist.append(item_name)
+
+    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
+    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
+
+    for dir in dirlist:
+        # print(dir)
+        main(os.path.join(path, dir))
+    for file in filelist:
+        pass
+        # print(file)
+
+
+def updatereadme(path):
+    item_list = os.listdir(path)
+    # print(item_list)
+    if path != '.\\':
+        shutil.copyfile("C:\\Users\DELL\\Desktop\\MyWebsite\\CBWeb\\README.md", os.path.join(path, 'README.md'))
+
+    dirlist = []
+    filelist = []
+    for item_name in item_list:
+        item_path = os.path.join(path, item_name)
+        if os.path.isfile(item_path):
+            # markdown文件
+            # print(item_path)
+            type_ = item_path.split(".")[-1]
+            if type_ != 'md':
+                continue
+            if item_path[0] == '_':
+                continue
+            if item_path == 'README.md':
+                continue
+            filelist.append(item_path)
+        elif os.path.isdir(item_path):
+            if item_name[0] == '_' or item_name[0] == '.':
+                continue
+            dirlist.append(item_name)
+
+    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
+    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
+
+    for dir in dirlist:
+        updatereadme(os.path.join(path, dir))
+    for file in filelist:
+        pass
 
 
 if __name__ == '__main__':
-    generateMenu('D:\docsify')
-    # path='D:\docsify'
-    # dir_list = os.listdir(path)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    updatereadme('.\\')
+    # main('.\\')
