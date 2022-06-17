@@ -11,14 +11,14 @@ def readmecontent():
 <div align="center">
   <h1> 欢迎来到CB的博客网站 👋</h1>
 </div>
-   
+ 
 # Picture of the day
 
 <div align="center">
     <img width=330px src="{wiki_link}"/>
 </div>
     
->{wiki_content}
+> {wiki_content}
   """
 
     print("download image...")
