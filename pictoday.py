@@ -48,7 +48,7 @@ def readmecontent():
     return new_readme
 
 
-new_readme = "daf"
+new_readme = readmecontent()
 
 
 def generatereadme(path):
