@@ -20,7 +20,8 @@ jobs:
         architecture: 'x64'
     - name: Create local changes
       run: |
-       
+        pip install requests
+        pip install lxml
         python pictoday.py
     - name: Commit files
       run: |
