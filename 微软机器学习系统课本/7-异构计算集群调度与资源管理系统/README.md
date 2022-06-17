@@ -1,9 +1,9 @@
 
-<div align="center">
-  <h1> 欢迎来到CB的博客网站 👋</h1>
-</div>
+
+# 欢迎来到CB的博客网站 👋
+
  
-# Picture of the day
+## Picture of the day
 
 <div align="center">
     <img width=330px src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/June_odd-eyed-cat_cropped.jpg/600px-June_odd-eyed-cat_cropped.jpg"/>
