@@ -52,8 +52,6 @@ def tree(basepath: list, path, lev):
                 continue
             dirlist.append(item_name)
 
-    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
-    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
     result = []
 
     for dir in dirlist:
@@ -75,16 +73,10 @@ def tree(basepath: list, path, lev):
 
 
 def writesidebar(path, ans):
-    if platform.system().lower() == 'windows':
-        with open(os.path.join(path, '_sidebar.md'), 'w', encoding='utf-8') as sider:
-            for item in ans:
-                sider.write('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], item[1]))
-                sider.write('\n')
-                # print('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], file_path))
-        # print(item[1].split('\\'))
-
-    elif platform.system().lower() == 'linux':
-        pass
+    with open(os.path.join(path, '_sidebar.md'), 'w', encoding='utf-8') as sider:
+        for item in ans:
+            sider.write('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], item[1]))
+            sider.write('\n')
 
 
 def main(path):
@@ -112,9 +104,6 @@ def main(path):
                 continue
             dirlist.append(item_name)
 
-    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
-    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
-
     for dir in dirlist:
         # print(dir)
         main(os.path.join(path, dir))
@@ -123,41 +112,8 @@ def main(path):
         # print(file)
 
 
-def updatereadme(path):
-    item_list = os.listdir(path)
-    # print(item_list)
-    if path != '.\\':
-        shutil.copyfile("C:\\Users\DELL\\Desktop\\MyWebsite\\CBWeb\\README.md", os.path.join(path, 'README.md'))
-
-    dirlist = []
-    filelist = []
-    for item_name in item_list:
-        item_path = os.path.join(path, item_name)
-        if os.path.isfile(item_path):
-            # markdown文件
-            # print(item_path)
-            type_ = item_path.split(".")[-1]
-            if type_ != 'md':
-                continue
-            if item_path[0] == '_':
-                continue
-            if item_path == 'README.md':
-                continue
-            filelist.append(item_path)
-        elif os.path.isdir(item_path):
-            if item_name[0] == '_' or item_name[0] == '.':
-                continue
-            dirlist.append(item_name)
-
-    # dirlist = sorted(dirlist, key=functools.cmp_to_key(strcmp))
-    # filelist = sorted(filelist, key=functools.cmp_to_key(strcmp))
-
-    for dir in dirlist:
-        updatereadme(os.path.join(path, dir))
-    for file in filelist:
-        pass
-
-
 if __name__ == '__main__':
-    updatereadme('.\\')
-    # main('.\\')
+    if platform.system().lower() == 'windows':
+        main('.\\')
+    elif platform.system().lower() == 'linux':
+        main('./')
