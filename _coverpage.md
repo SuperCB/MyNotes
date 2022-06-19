@@ -9,6 +9,6 @@
 + 神经网络编译器
 + 数据库系统
 + GPU程序设计
++ Python虚拟机
 
 
-![](_resource/head.jpeg)
