@@ -27,6 +27,7 @@ jobs:
       run: |
         git config --local user.email "1956699404@qq.com"
         git config --local user.name "SuperCB"
+        git add -A
         git commit -m "Update today's featured image on $(date +%Y-%m-%d)" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
