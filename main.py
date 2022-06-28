@@ -55,9 +55,9 @@ def tree(basepath: list, path, lev):
     result = []
 
     for dir in dirlist:
-        print(basepath)
+        # print(basepath)
         new_basepath = basepath + [dir]
-        print(new_basepath)
+        # print(new_basepath)
         item = (dir, '/'.join(new_basepath) + '/', lev)
 
         result.append(item)
