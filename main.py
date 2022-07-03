@@ -1,35 +1,18 @@
+from asyncio import streams
 import functools
 import os
 import platform
 import shutil
+from requests import patch
+import yaml
 
-
-def strcmp(stra, strb) -> bool:
-    import re
-
-    stra = re.sub('[\u4e00-\u9fa5]', '', stra)  # 去除字符串之中的中文
-    strb = re.sub('[\u4e00-\u9fa5]', '', strb)  # 去除字符串之中的中文
-
-    i, j = 0, 0
-    while i < len(stra) and j < len(strb):
-        if stra[i] < strb[j]:
-            return False
-        elif stra[i] > strb[j]:
-            return True
-        else:
-            pass
-
-        i += 1
-        j += 1
-
-    if i == len(stra):
-        return True
-
-    if j == len(strb):
-        return False
 
 
 def tree(basepath: list, path, lev):
+
+
+
+
     item_list = os.listdir(path)
     # print(item_list)
     dirlist = []
@@ -58,7 +41,7 @@ def tree(basepath: list, path, lev):
         # print(basepath)
         new_basepath = basepath + [dir]
         # print(new_basepath)
-        item = (dir, '/'.join(new_basepath) + '/', lev)
+        item = (dir, '/'.join(new_basepath) + '/', lev,1)
 
         result.append(item)
 
@@ -66,21 +49,16 @@ def tree(basepath: list, path, lev):
 
     for file in filelist:
         new_basepath = basepath + [file]
-        item = (file[:-3], '/'.join(new_basepath), lev)
+        item = (file[:-3], '/'.join(new_basepath), lev,0)
         result.append(item)
 
     return result
 
 
-def writesidebar(path, ans):
-    with open(os.path.join(path, '_sidebar.md'), 'w', encoding='utf-8') as sider:
-        for item in ans:
-            sider.write('  ' * item[2] + '- ' + '[%s](%s)' % (item[0], item[1]))
-            sider.write('\n')
 
 
 def main(path):
-    writesidebar(path, tree([], path, 0))
+    
 
     item_list = os.listdir(path)
     # print(item_list)
@@ -113,7 +91,35 @@ def main(path):
 
 
 if __name__ == '__main__':
-    if platform.system().lower() == 'windows':
-        main('.\\')
-    elif platform.system().lower() == 'linux':
-        main('./')
+    path='./docs'
+
+    with open("basic.yml","r")as basic:
+        basiclines=basic.readlines()
+    
+    ans = tree([], path, 1)
+    
+    with open(os.path.join('./', 'mkdocs.yml'), 'w', encoding='utf-8') as sider:
+        
+    
+        for line in basiclines:
+            sider.write(line)
+        
+        
+        sider.write('nav: \n')
+        sider.write("  - Home:\n")
+        sider.write("    - Getting Started : index.md\n")
+        sider.writable()
+        for item in ans:
+            if item[3]==1:
+                sider.write('  ' * item[2] + '- ' + '%s :' % item[0])
+            else:
+                sider.write('  ' * item[2] + '- ' +'%s : %s' % (item[0], item[1]))
+            sider.write('\n')
+    
+    
+    # if platform.system().lower() == 'windows':
+    #     main('.\\')
+    # elif platform.system().lower() == 'linux':
+    #     main('./')
+    
+

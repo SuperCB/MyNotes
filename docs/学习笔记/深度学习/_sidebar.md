@@ -1,0 +1,2 @@
+- [BatchNormalization原理](BatchNormalization原理.md)
+- [学不明白的卷积操作](学不明白的卷积操作.md)

@@ -1,0 +1,48 @@
+site_name: My Docs
+
+theme : 
+  name: material
+
+
+extra_javascript:
+
+    - 'https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js'
+    - 'https://cdnjs.loli.net/ajax/libs/pangu/3.3.0/pangu.min.js'
+    - 'https://cdnjs.loli.net/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'
+
+
+  
+# Extensions
+markdown_extensions:
+    - mkdocs_graphviz
+     
+    - pymdownx.superfences:
+          custom_fences:
+             - name: mermaid
+               class: mermaid
+               format: !!python/name:pymdownx.superfences.fence_code_format
+    - attr_list
+    - md_in_html
+    - admonition
+    - codehilite:
+        guess_lang: false
+    - def_list
+    - footnotes
+    - meta
+    - toc:
+        permalink: true
+    - pymdownx.arithmatex
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.details
+    - pymdownx.emoji:
+        emoji_generator: !!python/name:pymdownx.emoji.to_svg
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.magiclink
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde

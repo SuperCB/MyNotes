@@ -1,1 +1,0 @@
-- [BatchNormalization原理](BatchNormalization原理.md)
