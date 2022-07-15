@@ -1,0 +1,2832 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
+    
+    
+      
+        <title>7.2-训练作业，镜像与容器 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#72" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7.2-训练作业，镜像与容器
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Python%E8%AF%AD%E8%A8%80/Python%E7%9A%84C%E6%8B%93%E5%B1%95/" class="md-tabs__link md-tabs__link--active">
+        学习笔记
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          学习笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="学习笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          学习笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          深入理解Python语言
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解Python语言" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解Python语言
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Python%E8%AF%AD%E8%A8%80/Python%E7%9A%84C%E6%8B%93%E5%B1%95/" class="md-nav__link">
+        Python的C拓展
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Cuda
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cuda" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cuda
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/Gemm%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        Gemm优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/%E7%BA%BF%E7%A8%8B%E6%A0%BC%E3%80%81%E7%BA%BF%E7%A8%8B%E5%9D%97%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        线程格、线程块与线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/im2col/" class="md-nav__link">
+        im2col
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          深度学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/BatchNormalization%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        BatchNormalization原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B8%8D%E6%98%8E%E7%99%BD%E7%9A%84%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        学不明白的卷积操作
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          深度学习编译器
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习编译器" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习编译器
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_1" type="checkbox" id="__nav_2_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4_1">
+          Pytorch-Internal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pytorch-Internal" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Pytorch-Internal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/Pytorch-Internal/%E4%B8%80%E4%B8%AAConv%E7%AE%97%E5%AD%90%E7%9A%84%E7%94%9F%E5%91%BD%E5%8E%86%E7%A8%8B/" class="md-nav__link">
+        一个Conv算子的生命历程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/Pytorch-Internal/Pytorch%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        Pytorch源码阅读
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" type="checkbox" id="__nav_2_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4_2">
+          论文研读
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="论文研读" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          论文研读
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/DLcompiler%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        DLcompiler综述
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/pyi%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        pyi文件格式
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          微软机器学习系统课本
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="微软机器学习系统课本" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          微软机器学习系统课本
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_1" type="checkbox" id="__nav_2_5_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_1">
+          11-模型压缩与稀疏化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="11-模型压缩与稀疏化" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          11-模型压缩与稀疏化
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.2-%E5%9F%BA%E4%BA%8E%E7%A8%80%E7%96%8F%E5%8C%96%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/" class="md-nav__link">
+        11.2-基于稀疏化的模型压缩
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.1-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        11.1-模型压缩简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.3-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F/" class="md-nav__link">
+        11.3-模型压缩与硬件加速
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        11-前言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_2" type="checkbox" id="__nav_2_5_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_2">
+          5-深度学习框架的编译与优化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="5-深度学习框架的编译与优化" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          5-深度学习框架的编译与优化
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.1-%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        5.1-深度神经网络编译器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.3-%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.3-内存优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.4-%E5%86%85%E6%A0%B8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.4-内核优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.5-%E7%AE%97%E5%AD%90%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.5-算子调度优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        5-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.2-%E8%AE%A1%E7%AE%97%E5%9B%BE%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.2-计算图优化
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_3" type="checkbox" id="__nav_2_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_3">
+          6-分布式训练算法与系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="6-分布式训练算法与系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          6-分布式训练算法与系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.2-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%84%8F%E4%B9%89/" class="md-nav__link">
+        6.2-分布式深度学习的意义
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        6-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%B0%83/" class="md-nav__link">
+        6.6-分布式训练的通信协调
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.1-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        6.1-分布式计算简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B6%E8%A1%8C%E8%AE%AD%E7%BB%83%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        6.4-深度学习并行训练同步方式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.5-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        6.5-分布式训练系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.3-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB/" class="md-nav__link">
+        6.3-分布式训练算法分类
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_4" type="checkbox" id="__nav_2_5_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_4">
+          1-人工智能系统概述
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="1-人工智能系统概述" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          1-人工智能系统概述
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1.1-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8E%86%E5%8F%B2%EF%BC%8C%E7%8E%B0%E7%8A%B6%E4%B8%8E%E5%8F%91%E5%B1%95/" class="md-nav__link">
+        1.1-深度学习的历史，现状与发展
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1.3-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90%E4%B8%8E%E7%94%9F%E6%80%81/" class="md-nav__link">
+        1.3-深度学习系统组成与生态
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1.2-%E7%AE%97%E6%B3%95%EF%BC%8C%E6%A1%86%E6%9E%B6%EF%BC%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E5%8A%9B%E7%9A%84%E8%BF%9B%E6%AD%A5/" class="md-nav__link">
+        1.2-算法，框架，体系结构与算力的进步
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        1-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1.4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B7%E4%BE%8B%E8%83%8C%E5%90%8E%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        1.4-深度学习样例背后的系统问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/1.5-%E5%BD%B1%E5%93%8D%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E7%90%86%E8%AE%BA%EF%BC%8C%E5%8E%9F%E5%88%99%E4%B8%8E%E5%81%87%E8%AE%BE/" class="md-nav__link">
+        1.5-影响深度学习系统设计的理论，原则与假设
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_5" type="checkbox" id="__nav_2_5_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_5">
+          8-深度学习推理系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="8-深度学习推理系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          8-深度学习推理系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.2-%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E7%9A%84%E7%A6%BB%E7%BA%BF%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        8.2-模型推理的离线优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.4-%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%9F%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        8.4-推理系统的运行期优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.5-%E5%BC%80%E5%8F%91%E3%80%81%E8%AE%AD%E7%BB%83%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%9A%84%E5%85%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86-MLOps/" class="md-nav__link">
+        8.5-开发、训练与部署的全生命周期管理-MLOps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.1-%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        8.1-推理系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.3-%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        8.3-部署
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        8-前言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_6" type="checkbox" id="__nav_2_5_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_6">
+          9-自动化机器学习系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="9-自动化机器学习系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_6">
+          <span class="md-nav__icon md-icon"></span>
+          9-自动化机器学习系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        9-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9.1-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        9.1-自动化机器学习
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9.2-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        9.2-自动化机器学习系统与工具设计
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_7" type="checkbox" id="__nav_2_5_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_7">
+          13-人工智能优化计算机系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="13-人工智能优化计算机系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_7">
+          <span class="md-nav__icon md-icon"></span>
+          13-人工智能优化计算机系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        13-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.3-%E8%90%BD%E5%9C%B0%E6%8C%91%E6%88%98/" class="md-nav__link">
+        13.3-落地挑战
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.1-%E7%AE%80%E4%BB%8B%E4%B8%8E%E8%B6%8B%E5%8A%BF/" class="md-nav__link">
+        13.1-简介与趋势
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.2-%E5%AD%A6%E4%B9%A0%E5%A2%9E%E5%BC%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BA%94%E7%94%A8/" class="md-nav__link">
+        13.2-学习增强系统的应用
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_8" type="checkbox" id="__nav_2_5_8" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_8">
+          7-异构计算集群调度与资源管理系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="7-异构计算集群调度与资源管理系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_8">
+          <span class="md-nav__icon md-icon"></span>
+          7-异构计算集群调度与资源管理系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.5-%E5%AD%98%E5%82%A8/" class="md-nav__link">
+        7.5-存储
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.3-%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        7.3-调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.4-%E9%9D%A2%E5%90%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        7.4-面向深度学习的集群管理系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.6-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4/" class="md-nav__link">
+        7.6-开发与运维
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.1-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        7.1-异构计算集群管理系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        7-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          7.2-训练作业，镜像与容器
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        7.2-训练作业，镜像与容器
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#721" class="md-nav__link">
+    7.2.1 深度学习作业
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#722-image" class="md-nav__link">
+    7.2.2 环境依赖：镜像(Image)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#723" class="md-nav__link">
+    7.2.3 运行时资源隔离：容器
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2.3 运行时资源隔离：容器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    从头构建容器理解"进程级虚拟化"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#724-gpu" class="md-nav__link">
+    7.2.4 从操作系统视角看GPU技术栈
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2.4 从操作系统视角看GPU技术栈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpu" class="md-nav__link">
+    GPU技术栈的操作系统抽象
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-call" class="md-nav__link">
+    观测深度学习作业系统调用(System Call)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu_1" class="md-nav__link">
+    GPU虚拟化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#725-development-experience" class="md-nav__link">
+    7.2.5 人工智能作业开发体验（Development Experience）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    小结与讨论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    参考文献
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          编译原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译原理" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          编译原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_1" type="checkbox" id="__nav_2_6_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6_1">
+          编译器前端
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译器前端" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          编译器前端
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%BC%96%E8%AF%91%E5%99%A8%E5%89%8D%E7%AB%AF/First%E9%9B%86%E4%B8%8EFollow%E9%9B%86/" class="md-nav__link">
+        First集与Follow集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7">
+          深入理解计算机系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解计算机系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解计算机系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_1">
+          链接与加载
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="链接与加载" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          链接与加载
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%8A%A0%E8%BD%BD/ELF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        ELF文件格式
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2_1" type="checkbox" id="__nav_2_7_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2_1">
+          虚拟化技术
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="虚拟化技术" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_7_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          虚拟化技术
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%EF%BC%9F/" class="md-nav__link">
+        如何理解容器？
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2_2" type="checkbox" id="__nav_2_7_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2_2">
+          MIT6.828课程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="MIT6.828课程" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_7_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          MIT6.828课程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/%E7%A5%9E%E5%A5%87%E7%9A%84%E9%93%BE%E6%8E%A5/" class="md-nav__link">
+        神奇的链接
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/lab2%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        lab2记录
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8%E7%9A%84%3F/" class="md-nav__link">
+        计算机是如何启动的?
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux%E4%B8%AD%E7%9A%84rootfs/" class="md-nav__link">
+        Linux中的rootfs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        linux的内存分配机制
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8">
+          C++程序设计
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C++程序设计" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          C++程序设计
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_1" type="checkbox" id="__nav_2_8_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8_1">
+          深入理解Cmake
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解Cmake" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_8_1">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解Cmake
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Cmake/add_subdirectory%E7%94%A8%E6%B3%95/" class="md-nav__link">
+        add_subdirectory用法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%B0%96%E6%8B%AC%E5%8F%B7%E4%B8%8E%E5%BC%95%E5%8F%B7/" class="md-nav__link">
+        头文件中的尖括号与引号
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/Variant%E7%9A%84%E7%94%A8%E6%B3%95/" class="md-nav__link">
+        Variant的用法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_9">
+          应用程序开发
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="应用程序开发" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          应用程序开发
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9_1" type="checkbox" id="__nav_2_9_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_9_1">
+          Python程序开发
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Python程序开发" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_9_1">
+          <span class="md-nav__icon md-icon"></span>
+          Python程序开发
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/Python%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/PyGame%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        PyGame使用指南
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_10">
+          ACM算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ACM算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_10">
+          <span class="md-nav__icon md-icon"></span>
+          ACM算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ACM%E7%AE%97%E6%B3%95/Acwing%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        Acwing学习记录
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#721" class="md-nav__link">
+    7.2.1 深度学习作业
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#722-image" class="md-nav__link">
+    7.2.2 环境依赖：镜像(Image)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#723" class="md-nav__link">
+    7.2.3 运行时资源隔离：容器
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2.3 运行时资源隔离：容器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    从头构建容器理解"进程级虚拟化"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#724-gpu" class="md-nav__link">
+    7.2.4 从操作系统视角看GPU技术栈
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2.4 从操作系统视角看GPU技术栈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpu" class="md-nav__link">
+    GPU技术栈的操作系统抽象
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-call" class="md-nav__link">
+    观测深度学习作业系统调用(System Call)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu_1" class="md-nav__link">
+    GPU虚拟化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#725-development-experience" class="md-nav__link">
+    7.2.5 人工智能作业开发体验（Development Experience）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    小结与讨论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    参考文献
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<!--Copyright © Microsoft Corporation. All rights reserved.
+  适用于[License](https://github.com/microsoft/AI-System/blob/main/LICENSE)版权许可-->
+<h1 id="72">7.2训练作业，镜像与容器<a class="headerlink" href="#72" title="Permanent link">&para;</a></h1>
+<p><center> <img src="./img/2/7-2-15-jobrelated.png" ch="500" width="700" height="300" /></center>
+<center>图7-2-0. 平台作业与开发体验</center></p>
+<p>集群管理系统对环境依赖和资源隔离问题，需要通过镜像和运行期资源隔离等机制解决。如图7-2-0所示，本章将围绕集群管理系统上运行作业的依赖与运行期资源隔离，以及人工智能作业开发体验进行介绍。</p>
+<ul>
+<li><a href="#72训练作业镜像与容器">7.2训练作业，镜像与容器</a></li>
+<li><a href="#721-深度学习作业">7.2.1 深度学习作业</a></li>
+<li><a href="#722-环境依赖镜像image">7.2.2 环境依赖：镜像(Image)</a></li>
+<li><a href="#723-运行时资源隔离容器">7.2.3 运行时资源隔离：容器</a><ul>
+<li><a href="#从头构建容器理解进程级虚拟化">从头构建容器理解"进程级虚拟化"</a></li>
+</ul>
+</li>
+<li><a href="#724-从操作系统视角看gpu技术栈">7.2.4 从操作系统视角看GPU技术栈</a><ul>
+<li><a href="#gpu技术栈的操作系统抽象"><strong>GPU技术栈的操作系统抽象</strong></a></li>
+<li><a href="#观测深度学习作业系统调用system-call"><strong>观测深度学习作业系统调用(System Call)</strong></a></li>
+<li><a href="#gpu虚拟化"><strong>GPU虚拟化</strong></a></li>
+</ul>
+</li>
+<li><a href="#725-人工智能作业开发体验development-experience">7.2.5 人工智能作业开发体验（Development Experience）</a></li>
+<li><a href="#小结与讨论">小结与讨论</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul>
+<h2 id="721">7.2.1 深度学习作业<a class="headerlink" href="#721" title="Permanent link">&para;</a></h2>
+<p>当深度学习开发者在本地机器或者独占服务器进行模型的开发与训练时，环境问题较少，还没有暴露更多问题和挑战。例如，下面的几点因素是单机独占环境下的情况：</p>
+<ul>
+<li>独占环境，无需考虑环境，资源隔离问题。</li>
+<li>环境依赖路径: 本地/anaconda3。</li>
+<li>用户通过Python层的包管理软件或环境变量配置路径，即可完成Python库这层的依赖软件的隔离。</li>
+<li>GPU环境依赖: 本地/usr/local/cuda。</li>
+<li>用户本地NVIDIA CUDA等底层库较为固定，也可以通过环境变量较为方便的进行切换。</li>
+<li>数据路径: 本地/data</li>
+<li>用户数据直接上传到服务器本地磁盘，带宽较高。</li>
+<li>直接执行启动脚本: 存储在服务器磁盘，修改，调试监控等较为方便。</li>
+</ul>
+<div class="highlight"><pre><span></span><code># 作业启动脚本
+python train.py --batch_size=256  --model_name=resnet50
+</code></pre></div>
+<p>当深度学习作业准备提交到平台，用户需要提供什么信息呢？如图7-2-1和如下程序所示，我们可以参考以下实例提交作业样本模板（实例来源于<a href="https://github.com/microsoft/pai">OpenPAI</a>），观察相比单机提交需要特殊处理哪些部分和资源。</p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;jobName&quot;: &quot;restnet&quot;,
+    &quot;image&quot;: &quot;example.tensorflow:stable&quot;,
+    &quot;dataDir&quot;: &quot;/tmp/data&quot;,
+    &quot;outputDir&quot;: &quot;/tmp/output&quot;,
+    ...
+    &quot;taskRoles&quot;: [
+        {
+            ...
+            &quot;taskNumber&quot;: 1,
+            &quot;cpuNumber&quot;: 8,
+            &quot;memoryMB&quot;: 32768,
+            &quot;gpuNumber&quot;: 1,
+            &quot;command&quot;: &quot;python train.py --batch_size=256 \ 
+        --model_name=resnet50&quot;
+        }
+    ]
+}
+</code></pre></div>
+<p><center><img src="img/2/7-2-2-submit.png" ch="300" width="1000" height="380"></center>
+<center>图7-2-1. 用户提交的作业规格（Specification）实例，将作业提交到拥有4块GPU的服务器</center></p>
+<p>从作业提交模板中我们主要关注几个方面，并思考平台需要提供怎样的支持。</p>
+<ul>
+<li>环境依赖：</li>
+<li>问题：平台集群中的机器都是相同的操作系统与环境，如何支持用户使用不同的深度学习框架（例如，TensorFlow和PyTorch）和版本？</li>
+<li>解决方法：通过"image"填写的Docker镜像名，解决环境依赖问题。用户需要提前将打包好的依赖构建为Docker镜像，并提交到指定的镜像中心，供作业下载。 </li>
+<li>数据与代码：</li>
+<li>问题：平台上一般运行的是深度学习训练作业，每个作业都需要一定的数据作为输入，同时执行相应的代码，如果将数据和代码直接上传会造成接受用户请求的服务器负载过大，同时不能复用已经上传的数据和代码。</li>
+<li>解决方法：通过"dataDir"和"outputDir"填写作业依赖的数据和输出路径。用户上传数据和代码到平台指定的文件系统中的相应路径下，未来平台将数据和代码挂载到相应的作业进程。</li>
+<li>资源申请量：</li>
+<li>问题：用户可能会提交运行使用单GPU的作业，多块GPU的作业和分布式的作业，面对多样的用户需求，因为平台无法静态分析用户作业的资源需求，平台需要用户明确告知和配置其资源需求，否则容易提供过多资源浪费，或过少资源造成作业无法启动。</li>
+<li>解决方法：用户明确声明需要使用的计算资源（例如，GPU和CPU）和内存，这样让平台根据指定调度策略将匹配的空闲资源进行分配。</li>
+<li>资源隔离：</li>
+<li>问题：用户作业被分配指定资源后，可能多个作业在一台服务器执行，如何保证作业之间尽量不互相干扰？</li>
+<li>解决方法：平台可以通过<a href="https://www.docker.com/resources/what-container">容器</a>/<a href="https://en.wikipedia.org/wiki/Cgroups">cgroup</a>等技术，将进程进行轻量的资源限定和隔离。</li>
+<li>任务部署模式：</li>
+<li>问题：对于分布式的作业，如果用户不说明，平台无法知道并行化的策略，进而无法确认需要启动的任务数量。需要用户显式的声明。</li>
+<li>解决方法：对于分布式的作业，用户要明确告知需要启动的任务数量，进而平台能够启动多个任务副本进行训练。</li>
+<li>作业启动命令：</li>
+<li>问题：当平台给作业分配资源，需要用户告知作业的启动命令，进而平台启动作业，执行相应的代码。</li>
+<li>解决方法：用户需要明确在作业中描述相应的代码启动入口命令，进而让作业代码能够启动并执行。</li>
+</ul>
+<p>通过以上问题描述和解决方法，相信您已经了解在平台中执行的作业和本地执行的作业差异和需要考虑的问题，我们将在后面章节的内容中，逐步展开其中的重要技术点和原理。</p>
+<h2 id="722-image">7.2.2 环境依赖：镜像(Image)<a class="headerlink" href="#722-image" title="Permanent link">&para;</a></h2>
+<p>当用户在平台上执行作业，第一个比较大的问题就是本地开发环境和平台集群环境差异：
+- 服务器上没有预装好所需要的个性化环境?
+- 不同作业需要的框架，依赖和版本不同，安装繁琐且重复？
+- 部署服务器上可能会有大量重复安装的库，占用空间？
+- 深度学习特有问题：深度学习作业需要安装CUDA依赖和深度学习框架等</p>
+<p>所以平台朝着以下目标去选用相应的技术方案解决问题：
+复用整体安装环境并创建新环境，层级构建依赖，复用每一层级的依赖。这样既保证能有个性化环境的同时，也能保证性能和资源消耗更小。目前在主流的平台系统中，通过<a href="https://docs.docker.com/get-started/overview/#docker-objects">Docker镜像</a>来解决这个问题。而Docker镜像的本质是底层通过<a href="https://en.wikipedia.org/wiki/UnionFS">Union文件系统(Unionfs)</a>等机制而实现，它使得Docker能够高效地存储镜像各层。
+Unionfs是Linux、FreeBSD 和 NetBSD 的文件系统服务，其实现了<a href="https://en.wikipedia.org/wiki/Union_mount">联合挂载(Union Mount)</a>。它允许独立文件系统的文件和目录（称为分支）透明覆盖，形成一个单一的连贯文件系统。在合并的分支中具有相同路径的目录的内容将在新的虚拟文件系统内的单个合并目录中一起看到。在计算机操作系统中，联合挂载(Union Mount)是一种将多个目录组合成一个似乎包含其组合内容的方法。这样的机制使得Docker能够更加高效的存储文件和包。Docker支持多种Unionfs，例如, AUFS, OverlayFS等。</p>
+<p>接下来我们看一个实例去理解镜像。</p>
+<p>首先，用户需要书写Dockerfile，然后通过Dockerfile中的命令，将构建镜像文件。未来用户可以将文件上传到指定的镜像中心(Docker Hub)，未来平台启动作业后，会下载相应镜像到指定服务器，为作业配置好相应的依赖。</p>
+<p>下面就是一个Dockfile实例，我们可以通过其中的注释看到，其实就是在执行在服务器中的安装命令脚本，进行相关库和依赖的安装。</p>
+<div class="highlight"><pre><span></span><code><span class="c"># 设置镜像使用的基础镜像</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04</span>
+<span class="c"># 设置构建镜像时加入的参数</span>
+<span class="k">ARG</span><span class="w"> </span><span class="nv">PYTHON_VERSION</span><span class="o">=</span><span class="m">3</span>.6
+…
+<span class="c"># 构建镜像时所执行的脚本</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get update <span class="o">&amp;&amp;</span> apt-get install -y --no-install-recommends <span class="se">\</span>
+…
+<span class="k">RUN</span><span class="w"> </span>curl -o ~/miniconda.sh 
+…
+ /opt/conda/bin/conda install -y -c pytorch magma-cuda100 <span class="o">&amp;&amp;</span> <span class="se">\</span>
+…
+<span class="c"># 设置指令的工作目录</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/opt/pytorch</span>
+<span class="c"># 复制文件到镜像中</span>
+<span class="k">COPY</span><span class="w"> </span>. .
+…
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/workspace</span>
+<span class="k">RUN</span><span class="w"> </span>chmod -R a+w .
+</code></pre></div>
+<p>经过上面的Dockfile构建后，如图7-2-2，会打包如下的镜像。我们从镜像中可以看到其中的文件就是Dockerfile中所下载和安装的文件。</p>
+<p><center><img src="img/2/7-2-4-pytorchimage.png" ch="300" /></center>
+<center>图7-2-2. PyTorch镜像</center></p>
+<h2 id="723">7.2.3 运行时资源隔离：容器<a class="headerlink" href="#723" title="Permanent link">&para;</a></h2>
+<p>当用户在平台上执行作业，第二个比较大的问题就是用户想像独占资源那样在执行过程中不受其他作业对资源争用产生的干扰：
+- 集群资源被共享，如何保证作业互相之间不干扰和多占用资源？
+- 如何能够让不同作业可以运行在不同的命名空间防止冲突？
+- 如何保证隔离的同时，作业启动的越快越好？
+- 深度学习特有问题：GPU的核和内存如何隔离？</p>
+<p>所以平台朝着以下目标去选用相应的技术方案解决问题：
+能够尽可能细粒度的进行资源隔离，同时减少由于资源隔离(虚拟化)技术造成的新的开销。</p>
+<p>通过镜像解决了环境依赖问题，那么运行时的资源隔离问题如何解决呢？目前平台一般通过容器解决，而容器解决资源隔离问题时主要通过控制组（Cgroups）机制解决资源隔离，通过命名空间(Namespace)解决命名空间隔离。</p>
+<ul>
+<li>容器的定义: </li>
+<li>Linux容器（LXC）是一组 1 个或多个与系统其余部分隔离的进程。Linux Containers是一种操作系统级别的虚拟化方法，用于使用单个Linux内核在控制主机上运行多个隔离的Linux系统（容器）。 </li>
+<li>支撑技术： </li>
+<li>控制组<a href="https://man7.org/linux/man-pages/man7/cgroups.7.html">Cgroups</a>(缩写自Control Groups)：是一种Linux内核特性，它能够控制(Control)，计数（Accounting）和隔离(Isolation)一组进程的资源（例如，CPU，内存，磁盘I/O，网络等）及使用。</li>
+<li>命名空间<a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">Namespace</a>: 命名空间将全局系统资源包装在一个抽象中，使命名空间内的进程看起来他们拥有自己独立的全局资源实例。命名空间可以实现如，pid，net，mnt，ipc，user等的包装和抽象。</li>
+</ul>
+<p>如图7-2-3所示，用户可以通过创建控制组(Cgroups)进行资源的限制，之后启动进程时，通过控制组(Cgroups)约束资源使用量，并在运行时进行隔离。</p>
+<p><center><img src="img/2/7-2-8-cgroups.png" ch="300" width="500" height="300"/></center>
+<center>图7-2-3. 控制组实例</center></p>
+<p>如图7-2-4所示，用户可以通过创建命名空间(Namespaces)进行资源的包装，之后启动进程时，进程内只能看到命名空间内的资源，无法感知其进程外主机其他的资源。</p>
+<p><center><img src="img/2/7-2-7-namespace.png" ch="300" width="500" height="500"/></center>
+<center>图7-2-4. 命名空间实例</center></p>
+<p>由于深度学习目前依赖GPU进行训练，为了让容器能支持挂载GPU，一般GPU的厂商都会提供对Docker的特定支持来提供相应的功能。例如，NVIDIA提供了针对NVDIA GPU的支持，用户可以参考官方<a href="https://github.com/NVIDIA/nvidia-docker">nvidia-docker文档</a>进行环境配置。但是由于软硬件的虚拟化支持不像传统CPU充分，所以目前主流方式还是GPU为粒度的挂载和隔离，无法原生像传统操作系统对CPU进行细粒度的时分复用、内存隔离和动态迁移。
+当完成环境配置之后，用户可以使用挂载NVIDIA GPU的Docker容器实例。我们可以通过以下命令理解平台是如何启动GPU的容器。</p>
+<div class="highlight"><pre><span></span><code># 通过官方CUDA镜像测试nvidia-smi命令，并挂载所有GPU
+$ docker run --gpus all nvidia/cuda:9.0-base nvidia-smi
+
+# 启动一个可以访问GPU的容器，并挂载2块GPU
+$ docker run --gpus 2 nvidia/cuda:9.0-base nvidia-smi
+
+# 启动一个可以访问GPU的容器，并挂载1号和2号GPU
+$ docker run --gpus &#39;&quot;device=1,2&quot;&#39; nvidia/cuda:9.0-base nvidia-smi
+</code></pre></div>
+<h3 id="_1">从头构建容器理解"进程级虚拟化"<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>如果大家对容器底层是如何构建的有更深入的了解感兴趣，可以参考实例<a href="https://medium.com/swlh/build-containers-from-scratch-in-go-part-1-namespaces-c07d2291038b">通过Go语言从头构建容器</a>，<a href="https://ericchiang.github.io/post/containers-from-scratch/">Containers from Scratch</a>。
+通过这个实例，读者可以了解容器的底层是通过哪些调用所构建出来，同时用户可以构建自己的个性化容器。接下来，我们通过<a href="https://ericchiang.github.io/post/containers-from-scratch/">Containers from Scratch</a>实例，构建一个容器，这样让读者从抽象的概念中跳出，由具体的实例感知，为何容器被称作"进程级虚拟化"，同时读者就可以思考相比于基于Hypervisor的虚拟机其优劣势。同时理解Docker本身是一个技术泛称，同时是一家公司，其本身更多是提供工具链，镜像中心，标准。容器和镜像我们可以通过Linux系统调用（System Call）和命令从头构建。</p>
+<p>从头构建一个容器实例与步骤，这个实例对理解Docker镜像和容器的底层机制有较好的帮助。读者可以参考<a href="https://ericchiang.github.io/post/containers-from-scratch/">Containers from Scratch</a>及以下步骤进行构建：</p>
+<ol>
+<li>设置容器文件系统
+    容器镜像，其实很多时候是tar文件，我们可以从网上下载一个简单的tar文件，这里包含Debian文件系统。
+    <div class="highlight"><pre><span></span><code>$ wget https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz
+$ sha256sum rootfs.tar.gz 
+c79bfb46b9cf842055761a49161831aee8f4e667ad9e84ab57ab324a49bc828c  rootfs.tar.gz
+</code></pre></div>
+    解压并观察压缩文件内容，解压后的文件夹像一个Linux操作系统。对如何构建这个tar文件，读者可以参考其他实例和资料，当前我们暂不在此实例介绍。
+    <div class="highlight"><pre><span></span><code>$ sudo tar -zxf rootfs.tar.gz
+$ ls rootfs
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+</code></pre></div></li>
+<li><a href="https://man7.org/linux/man-pages/man2/chroot.2.html">chroot</a>构建进程文件夹系统视图
+    我们将使用的第一个工具是 chroot。一个围绕类似名称的系统调用的瘦包装器，它允许我们限制文件系统的进程视图。 在这种情况下，我们将进程限制在“rootfs”目录，然后执行一个 shell（/bin/bash）。
+    <div class="highlight"><pre><span></span><code>$ sudo chroot rootfs /bin/bash
+root@localhost:/# ls /
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+root@localhost:/# which python
+/usr/bin/python
+root@localhost:/# /usr/bin/python -c <span class="s1">&#39;print &quot;Hello, container world!&quot;&#39;</span>
+Hello, container world!
+root@localhost:/# 
+</code></pre></div>
+    1，2步骤等价于我们拉取和挂载Docker镜像。</li>
+<li><a href="https://man7.org/linux/man-pages/man1/unshare.1.html">unshare</a>创建命名空间
+   通过unshare让这个 chroot 进程命名空间隔离，让我们在另一个终端的主机上运行命令。命名空间允许我们创建系统的受限视图，例如进程树、网络接口和挂载。创建命名空间不难，只需一个带有一个参数的系统调用，unshare。 unshare 命令行工具为我们提供了一个很好的系统调用包装器，让我们手动设置命名空间。 如下脚本所示，我们将为 shell 创建一个 PID 命名空间，然后像上一个示例一样执行 chroot。
+   <div class="highlight"><pre><span></span><code> $ sudo unshare -p -f --mount-proc<span class="o">=</span><span class="nv">$PWD</span>/rootfs/proc <span class="se">\</span>
+ chroot rootfs /bin/bash
+ root@localhost:/# ps aux
+ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+ root         <span class="m">1</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">20268</span>  <span class="m">3240</span> ?        S    <span class="m">22</span>:34   <span class="m">0</span>:00 /bin/bash
+ root         <span class="m">2</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">17504</span>  <span class="m">2096</span> ?        R+   <span class="m">22</span>:34   <span class="m">0</span>:00 ps aux
+ root@localhost:/#
+</code></pre></div>
+   在创建了一个新的进程命名空间之后，在我们的 chroot 内一探究竟，我们会发现一些有趣的东西。shell认为它的PID是1，更重要的是，我们再也看不到主机的进程树了。</li>
+<li><a href="https://man7.org/linux/man-pages/man1/nsenter.1.html">nsenter</a>进入命名空间
+   此步骤等价于我们查询Docker容器ID后，通过Docker exec进入容
+   器。
+   类似的我们需要先找到进程ID和命名空间，之后再进入这个命名空间。
+   通过下面命令找到刚才我们通过chroot运行的shell进程。
+   <div class="highlight"><pre><span></span><code> $ <span class="c1"># From the host, not the chroot.</span>
+ $ ps aux <span class="p">|</span> grep /bin/bash <span class="p">|</span> grep root
+ ...
+ root     <span class="m">29840</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">20272</span>  <span class="m">3064</span> pts/5    S+   <span class="m">17</span>:25   <span class="m">0</span>:00 /bin/bash
+</code></pre></div>
+   内核将 /proc/(PID)/ns 下的命名空间公开为文件。 在这种情况下，/proc/29840/ns/pid 是我们希望加入的进程命名空间。
+   <div class="highlight"><pre><span></span><code> $ sudo ls -l /proc/29840/ns
+ total <span class="m">0</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 ipc -&gt; <span class="s1">&#39;ipc:[4026531839]&#39;</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 mnt -&gt; <span class="s1">&#39;mnt:[4026532434]&#39;</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 net -&gt; <span class="s1">&#39;net:[4026531969]&#39;</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 pid -&gt; <span class="s1">&#39;pid:[4026532446]&#39;</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 user -&gt; <span class="s1">&#39;user:[4026531837]&#39;</span>
+ lrwxrwxrwx. <span class="m">1</span> root root <span class="m">0</span> Oct <span class="m">15</span> <span class="m">17</span>:31 uts -&gt; <span class="s1">&#39;uts:[4026531838]&#39;</span>
+</code></pre></div>
+   nsenter 命令提供了一个围绕 setns 的包装器以进入命名空间。 我们将提供命名空间文件，然后运行 unshare 以重新挂载 /proc 和 chroot 以设置 chroot。 这一次，我们的 shell 将加入现有的命名空间，而不是创建一个新的命名空间。
+   <div class="highlight"><pre><span></span><code> $ sudo nsenter --pid<span class="o">=</span>/proc/29840/ns/pid <span class="se">\</span>
+ unshare -f --mount-proc<span class="o">=</span><span class="nv">$PWD</span>/rootfs/proc <span class="se">\</span>
+ chroot rootfs /bin/bash
+ root@localhost:/# ps aux
+ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+ root         <span class="m">1</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">20272</span>  <span class="m">3064</span> ?        S+   <span class="m">00</span>:25   <span class="m">0</span>:00 /bin/bash
+ root         <span class="m">5</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">20276</span>  <span class="m">3248</span> ?        S    <span class="m">00</span>:29   <span class="m">0</span>:00 /bin/bash
+ root         <span class="m">6</span>  <span class="m">0</span>.0  <span class="m">0</span>.0  <span class="m">17504</span>  <span class="m">1984</span> ?        R+   <span class="m">00</span>:30   <span class="m">0</span>:00 ps aux
+</code></pre></div></li>
+<li><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html">cgroups</a>进行资源约束
+    对于这个例子，我们将创建一个 cgroup 来限制进程的内存。 创建 cgroup 很简单，只需创建一个目录即可。 在这种情况下，我们将创建一个名为“demo”的内存组。 创建后，内核将使用可用于配置 cgroup 的文件填充目录。
+    <div class="highlight"><pre><span></span><code>$ sudo su
+$ mkdir /sys/fs/cgroup/memory/demo
+$ ls /sys/fs/cgroup/memory/demo/
+cgroup.clone_children               memory.memsw.failcnt
+cgroup.event_control                memory.memsw.limit_in_bytes
+cgroup.procs                        memory.memsw.max_usage_in_bytes
+memory.failcnt                      memory.memsw.usage_in_bytes
+memory.force_empty                  memory.move_charge_at_immigrate
+memory.kmem.failcnt                 memory.numa_stat
+memory.kmem.limit_in_bytes          memory.oom_control
+memory.kmem.max_usage_in_bytes      memory.pressure_level
+memory.kmem.slabinfo                memory.soft_limit_in_bytes
+memory.kmem.tcp.failcnt             memory.stat
+memory.kmem.tcp.limit_in_bytes      memory.swappiness
+memory.kmem.tcp.max_usage_in_bytes  memory.usage_in_bytes
+memory.kmem.tcp.usage_in_bytes      memory.use_hierarchy
+memory.kmem.usage_in_bytes          notify_on_release
+memory.limit_in_bytes               tasks
+memory.max_usage_in_bytes
+</code></pre></div>
+    要调整一个值，我们只需写入相应的文件。 让我们将 cgroup 限制为 100MB 内存并关闭交换。
+    <div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="s2">&quot;100000000&quot;</span> &gt; /sys/fs/cgroup/memory/demo/memory.imit_in_bytes
+$ <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /sys/fs/cgroup/memory/demo/memory.swappiness
+</code></pre></div>
+    任务文件很特殊，它包含分配给 cgroup 的进程列表。 要加入 cgroup，我们可以编写自己的 PID。读者可以替换为上面程序的PID 29840即可。
+    <div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="m">29840</span> &gt; /sys/fs/cgroup/memory/demo/tasks
+</code></pre></div></li>
+</ol>
+<p>通过以上实例，相信读者已经理解容器和镜像的工作原理，我们忽略很多其他安全，优化和功能，以期读者了解核心问题。</p>
+<h2 id="724-gpu">7.2.4 从操作系统视角看GPU技术栈<a class="headerlink" href="#724-gpu" title="Permanent link">&para;</a></h2>
+<p>GPU在当前计算机中被抽象为设备，操作系统通过ioctl系统调用进行设备控制，如图7-2-5所示。在以往的工作中，有两个方向的思路尝试去将GPU技术栈纳入到操作系统的管理中并提供多租，虚拟化等的支持。</p>
+<p><center> <img src="./img/2/7-2-9-osgpu.png" ch="500" width="700" height="400" /></center>
+<center>图7-2-5. CPU和GPU技术栈与操作系统抽象(<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2011/05/hotos11-final.pdf">图片来源</a>)</center></p>
+<p>从图7-2-5中可以看到，CPU程序中有大量的系统调用支持，操作系统提供对各种硬件抽象管理与用户多进程多租的支持。但是对GPU程序，当前模式更像是Client/Server抽象，GPU是设备，CPU程序提交作业到GPU并获取响应结果，但是对操作系统GPU本身是一个黑盒，一般通过<a href="https://man7.org/linux/man-pages/man2/ioctl.2.html">ioctl</a>进行有限的交互与控制。</p>
+<h3 id="gpu"><strong>GPU技术栈的操作系统抽象</strong><a class="headerlink" href="#gpu" title="Permanent link">&para;</a></h3>
+<ol>
+<li>思路1：操作系统纳入GPU。让GPU能被ioctl以外的系统调用所管理，或者操作系统理解ioctl语义对其能做细粒度资源管理。</li>
+<li>当前思路依赖设备供应商在驱动层暴露更多信息被操作系统管理，但是之前一些厂商（例如，英伟达）这部分为闭源，且只能通过ioctl控制设备，很难分析语义。2011年HotOS上，Christopher J. Rossbach等人在<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2011/05/hotos11-final.pdf">Operating Systems must support GPU abstractions
+</a>曾有相关工作提出在操作系统层面抽象GPU管理，但是这篇工作只提出构想，并受限于设备供应商的设备驱动的支持，从之后的发展状况来看，受限于设备供应商的配合和支持，当前道路并不没有走通。在ATC13，Konstantinos Menychtas等人提出<a href="https://www.usenix.org/system/files/conference/atc13/atc13-menychtas.pdf">Enabling OS Research by Inferring Interactions in the Black-Box GPU Stack</a>当前GPU资源是黑盒，不能被操作系统所管理，所以对系统调用进行拦截和刻画抽象出程序状态机，启发后续操作系统对GPU设备的研究。之后的工作也层尝试设计从GPU调用操作系统系统调用（<a href="http://www.cs.yale.edu/homes/abhishek/jvesely-isca18.pdf">ISCA18 Generic System Calls for GPUs</a>）。但是以上的工作由于实用性，部署难度和受限于厂商支持，在后续的业界平台或研究工作中没有过多的跟随工作。2022年5月，<a href="https://developer.nvidia.com/blog/nvidia-releases-open-source-gpu-kernel-modules/">NVIDIA开源了其GPU内核模块（GPU Kernel Modules）</a>，一定程度上会让当前此方向研究有更新的进展。</li>
+<li>思路2：GPU编程接口上抽象操作系统。此类工作以设备API作为系统调用的视角抽象设备管理，在设备API层以下进行拦截或管理达到多租或虚拟化的效果。</li>
+<li>厂商官方工作：<a href="https://docs.nvidia.com/deploy/mps/index.html">MPS</a>，<a href="https://developer.nvidia.com/blog/unified-memory-cuda-beginners/">Unified Memory</a>等工作是NVIDIA将传统操作系统的多进程调度、虚拟内存等经典设计思路在CUDA上进行的实现，进而能够实现复用GPU，打破GPU显存瓶颈的效果。</li>
+<li>研究工作：以<a href="http://www.rcuda.net/">rCUDA</a>，<a href="https://arxiv.org/abs/2202.07848">Singularity</a>为代表的工作在<a href="https://docs.nvidia.com/cuda/cuda-runtime-api/index.html">NVIDIA Runtime API</a>，<a href="https://docs.nvidia.com/cuda/cuda-driver-api/index.html">Driver API</a>上进行拦截，提供时分复用，内存隔离，和动态迁移的功能。</li>
+<li>第三方公司的工作：以<a href="https://blog.csdn.net/m0_49711991/article/details/107979798">OrionX猎户座</a>为代表的产品，设计类似传统操作系统的内核态抽象，在大规模集群上提供资源池化，并通过内核态抽象让系统更安全和稳定。</li>
+</ol>
+<h3 id="system-call"><strong>观测深度学习作业系统调用(System Call)</strong><a class="headerlink" href="#system-call" title="Permanent link">&para;</a></h3>
+<p><a href="https://strace.io/">strace</a>
+是用于 Linux 的诊断、调试和指导性用户空间实用程序。它用于监视进程与 Linux 内核之间的交互，包括系统调用、信号传递和进程状态的变化。本小节我们可以通过strace观测深度学习程序如何在操作系统的系统调用层和GPU打交道，以另一个抽象层次和视角深入理解深度学习程序的底层原理。
+1. 例如在Ubuntu操作系统中，执行一下安装命令：
+<div class="highlight"><pre><span></span><code>apt-get install strace
+</code></pre></div>
+2. 假设用户有一个训练程序（train.py），里面是PyTorch训练卷积神经网络。</p>
+<p><div class="highlight"><pre><span></span><code>strace python train.py
+</code></pre></div>
+3. 观测系统调用日志。</p>
+<p>我们可以观察主要调用的是ioctl和mmap等系统调用，但是从ioctl很难获取到可读和可解释信息。在之前ATC13研究工作<a href="https://www.usenix.org/system/files/conference/atc13/atc13-menychtas.pdf">Enabling OS Research by Inferring Interactions
+in the Black-Box GPU Stack</a>中也有对ioctl进行收集分析并抽象出状态机的工作。</p>
+<h3 id="gpu_1"><strong>GPU虚拟化</strong><a class="headerlink" href="#gpu_1" title="Permanent link">&para;</a></h3>
+<p>目前代表性的GPU虚拟化资源隔离技术有以下几种：</p>
+<ul>
+<li>应用程序编程接口远程处理(API Remoting)技术：</li>
+<li>包装GPU APIs作为客户前端，通过一个转发层作为后端，协调所有对GPU的访问。挑战之一在于要最小化前端和后端的通信代价，同时API转发面临着充分支持的挑战功能，由于侵入的复杂性修改客户图形软件堆栈，以及客户和主机图形之间不兼容软件栈。</li>
+<li>代表性工作：<a href="https://github.com/cjg/GVirtuS">GVirtuS</a>, <a href="https://github.com/tkestack/vcuda-controller">vCUDA</a>, <a href="http://www.rcuda.net/">rCUDA</a>, <a href="https://github.com/coldfunction/qCUDA">qCUDA</a>。</li>
+<li>直接GPU直通(Direct GPU Pass-Through)技术：</li>
+<li>在Direct GPU pass-through技术中，GPU被单个虚拟机独占且永久地直接访问，其实现的GPU资源隔离粒度为单块GPU，不支持热迁移。GPU直通是一种允许Linux内核直接将内部GPU呈现给虚拟机的技术，该技术实现了96-100%的本地性能，但GPU提供的加速不能在多个虚拟机之间共享。</li>
+<li>代表性工作：例如，NIVIDIA对公有云厂商<a href="https://docs.nvidia.com/grid/cloud-service-support.html">Amazon AWS, Microsoft Azure, Google Cloud Platform, Alibaba Cloud</a>提供GPU pass-through技术等。</li>
+<li><a href="https://www.usenix.org/system/files/conference/atc14/atc14-paper-tian.pdf">中介直通(Mediated Pass-Through)</a>技术：</li>
+<li>直通传递性能关键型资源和访问，而在设备上中介代理(Mediating)特权操作，使用性能好，功能齐全，共享能力强。</li>
+<li>代表性工作：NIVIDIA对公有云厂商<a href="https://docs.nvidia.com/grid/cloud-service-support.html">Amazon AWS, Microsoft Azure, Google Cloud Platform, Alibaba Cloud</a>提供的vGPU技术. </li>
+<li>设备仿真(Device Emulation)技术：</li>
+<li>GPU架构非常复杂，变化很快，它们的内部细节通常是保密的。完全虚拟化新一代的GPU通常是不可行，只有旧的和更简单的一代才容易通过emulation的方式虚拟化。并且其实现非常复杂性能极低，所以不符合今天的要求的需求。</li>
+<li>代表性工作：<a href="https://techzone.vmware.com/resource/deploying-hardware-accelerated-graphics-vmware-horizon-7">VMware SVGA 3D software renderer</a>, <a href="https://www.virtualbox.org/manual/">VirtualBox VMSVGA graphics controller</a>等。</li>
+</ul>
+<p>由于目前一般训练平台中部署的大多数GPU为NVIDIA GPU，其提供的最新的代表性GPU资源隔离技术有以下几种：
+- <a href="https://www.nvidia.com/en-us/technologies/multi-instance-gpu/">NVIDIA 多实例GPU（Multi-Instance GPU）简称 (MIG)</a>：多实例GPU是NVIDIA 在Ampe其在最新的Ampere系列GPU中开始支持的，在硬件层面将GPU实例进行隔离与虚拟化的技术。多实例 GPU (MIG) 可扩展每个NVIDIA A100 GPU的共享能力和利用率。MIG可将 A100 和 H100 GPU 划分为最多达七个实例，每个实例均与各自的高带宽显存、缓存和计算核心完全隔离。
+- <a href="https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf">NVIDIA 多进程服务（Multi-Process Service）简称（MPS）</a>：多进程服务(MPS)是NVIDIA提供的软件层共享物理GPU资源并提供一定程度进程级虚拟化的技术。MPS运行时架构旨在透明地支持多进程CUDA应用程序，通常是MPI作业。其利用<a href="https://developer.download.nvidia.com/compute/DevZone/C/html_x64/6_Advanced/simpleHyperQ/doc/HyperQ.pdf">Hyper-Q</a>功能实现，Hyper-Q允许CUDA内核在同一GPU上并发处理，当GPU计算能力未被单个应用进程充分利用时，这可以提高性能。MPS一般在一些GPU型号中如果使用的是软件层的实现有一定开销，如果是硬件层的实现能够减少开销。例如，研究工作<a href="https://www.usenix.org/system/files/osdi18-xiao.pdf">Gandiva</a>发现，MPS会导致P40/P100的较大开销和性能损失。然而，<a href="https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf">V100</a> 中提供对MPS的硬件支持，使用MPS可能能够在V100减少软件层支持方式产生开销并提升利用率。</p>
+<h2 id="725-development-experience">7.2.5 人工智能作业开发体验（Development Experience）<a class="headerlink" href="#725-development-experience" title="Permanent link">&para;</a></h2>
+<p>在使用集群管理系统时，通常人工智能算法工程师可以使用以下模式的开发环境进行人工智能作业与Python脚本的开发。
+- 作业在提交前，可以选用下面的工具进行Python作业的开发。
+- 一般作业提交到平台前用户需要填写作业的规格（Specification），进而选用下面的工具进行提交，监控与管理。</p>
+<p>以下工具有些只能进行作业提交，有些能进行Python开发，有些则两个功能都兼顾：
+- 客户端集成开发环境（Integrated Development Environment）
+  - <a href="https://code.visualstudio.com/">Visual Studio Code</a>：Visual Studio Code，通常也称为 VS Code，是 Microsoft 为 Windows、Linux 和 macOS 开发的源代码编辑器。在人工智能场景下，算法工程师主要使用VS Code进行Python开发，调试（Debugging）、语法高亮（Syntax Highlighting）、智能代码完成 （Intelligent Code Completion）、预装代码片段（Code Snippet）、代码重构（Code Refactoring）和嵌入 Git 的支持。用户可以更改主题、键盘快捷键、首选项，并安装添加额外功能的扩展。使用VS Code类似的客户端IDE进行开发的特点是，功能强大，调试，补全等功能完善。
+  - VS Code实用人工智能插件简介：
+    - 一站式开发插件：<a href="https://github.com/microsoft/vscode-tools-for-ai">Tools for AI</a> 当前已改名 Visual Studio Code Azure 机器学习扩展。可以使用 Visual Studio Code 界面中的 Azure 机器学习服务轻松构建、训练和部署机器学习模型到云或边缘。 此扩展的早期版本以 Visual Studio Code Tools for AI 的名称发布。工具提供，部署到云端或边缘的支持，常用深度学习库的支持，本地实验再部署到大规模集群，集成自动化机器学习，通过CI/CD工具跟踪实验，管理模型。
+    - 代码完成（Code Completion）：<a href="https://www.kite.com/integrations/vs-code/">Kite for VS Code</a> 适用于 VS Code 的各种语言，通过海量代码库，训练人工智能模型，提供智能代码完成服务。智能感知（Intellisense）、代码片段（Code Snippets）、光标跟随（Cursor-Following）文档的 AI 代码完成。 Kite 支持 Python 等文件类型，如图7-2-6.对比有代码补全将大幅提升开发生产力，这也是集成开发环境的优势。同时我们也看到这类工作属于AI for System的一种，OpenAI也开源<a href="https://copilot.github.com/">Copilot</a>进行更加智能化的代码提示和程序合成（Program Synthesis）。
+  <center> <img src="./img/2/../2/7-2-11-codecompletion.png" ch="500" width="400" height="200" /></center>
+<center>图7-2-6. Kite对Python代码补全 (<a href="https://www.kite.com/">图片来源</a>)</center></p>
+<ul>
+<li>网页（Web）服务开发环境</li>
+<li>集群提供的Web管理界面：一般平台会提供一个Web页面方便用户提交作业的规格（Specification），填写好作业镜像，启动命令，资源等，如前面小节所示。网页服务开发环境适合提交与管理，监控作业。图7-2-7.所示，用户可以通过OpenPAI的提交界面，填写，作业名，需要提交的虚拟集群（Virtual Cluster），打包和上传好的镜像名，资源需求和启动命令，即可完成提交。</li>
+<li><a href="https://jupyter.org/">Jupyter Notebook</a>：有些平台会提供Jupyter服务并进行运维，但是Jupter特点是一般用户提交作业独占资源后使用或者是交互式作业，如果单纯是用Jupter做为作业提交入口，不容易做权限管理与作业运维。对用户来说是不需要安装本地环境，较为轻量。</li>
+<li>命令行：平台一般也可以提供命令行工具。命令行的方式也是用户比较习惯使用的方式，其特点是轻量，容易批量自动化的提交作业，且方便未来复用模板。命令行只适合提交与管理作业。</li>
+<li>REST API：平台一般也可以提供REST API。REST API作为作业提交或监控作业的接口好处是，可编程，且不需要提前安装额外库，比命令行本身还要轻量，缺点是需要用户做一定的调用与结果解析编程。REST API只适合提交与管理作业。</li>
+</ul>
+<p><center> <img src="./img/2/../2/7-2-10-submitjob.png" ch="500" width="1200" height="600" /></center>
+<center>图7-2-7. 通过Web界面提交作业到集群 (<a href="https://github.com/microsoft/pai/blob/master/docs/manual/cluster-user/imgs/new-input-command.png">图片来源</a>)</center> </p>
+<p>如图7-2-8所示，开发者在提交作业到集群之前一般会经历大致三个环境的开发，因为集群资源紧张需要排队，一般开发者会先在自己的开发环境开发完成保证程序不出错后再提交到集群平台。</p>
+<ol>
+<li>书写Python人工智能程序：用户可以本地使用VS Code等工具进行书写。VS Code通过插件方便本地调试，代码静态检测，与代码完成，能比较好的提升开发效率，同时不需要平台资源排队，对快速开发原型非常方便。</li>
+<li>本地一般没有GPU或者GPU资源不足以训练模型，一般如果有可用的测试服务器挂载有GPU，开发者可以在第二个阶段提交作业到测试服务器进行测试，如果是小规模作业也可以在服务器完成一定的训练，但是GPU不足以满足大规模多卡和分布式训练，或者搜索空间巨大的超参数搜索需求，所以调试完成的程序可以在测试服务器进行Docker镜像构建或者上传数据等。在这个阶段比较适合使用VS Code配合<a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote SSH</a>插件进行远程开发。</li>
+<li>当用户确保程序开发完成就可以将作业提交（用户可以选用命令行工具，Web或者REST API进行作业提交）到平台进行批处理作业的执行，由于GPU是稀缺资源，可能会经历一定的排队的流程，这个时候用户可以用闲暇时间继续开发新的作业或者阅读论文等找新的优化点与调试其他作业与模型。作业提交之后就可以参考如图7-2-9的流程，进行作业的完整执行了。这个过程就比较适合通过Web访问作业监控界面，SSH登陆到作业进行调试，或者通过部署Jupyter进行交互式开发。
+<center> <img src="./img/2/../2/7-2-13-devflow.png" ch="500" width="700" height="300" /></center>
+<center>图7-2-8. 人工智能作业的不同开发环境 (<a href="">图片来源</a>)</center></li>
+</ol>
+<p>如图7-2-9所示，开发者一般经历本地开发，测试服务器开发，进而再打包程序提交到平台，监控作业状态与调试，最终程序执行完成返回状态，模型或数据，开发者可以再开始下一次的作业提交。</p>
+<p><center> <img src="./img/2/../2/7-2-14-devlifesequence.png" ch="500" width="1100" height="750" /></center>
+<center>图7-2-9. 人工智能作业开发体验时序图 (<a href="">图片来源</a>)</center></p>
+<p>如图7-2-10所示，当作业已经调试完成，提交到集群上之后，会经历以下的生命周期完成训练过程。
+1. 用户首先上传数据到存储。
+2. 上传镜像到镜像中心。
+3. 提交作业规格，填写数据，镜像路径，资源需求和启动命令行。
+4. 集群调度器调度作业。
+5. 空闲GPU节点拉取（Pull）镜像。
+6. 空闲GPU节点启动作业。
+7. 挂载文件系统。
+8. 作业运行启动。
+9. 作业监控不断汇报性能指标和日志用于观测与调试。
+10. 训练完成作业保存结果。</p>
+<p><center> <img src="./img/2/../2/7-2-12-joblifecycle.png" ch="500" width="1100" height="600" /></center>
+<center>图7-2-10. 提交到集群的作业生命周期 (<a href="">图片来源</a>)</center></p>
+<h2 id="_2">小结与讨论<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>本章我们主要介绍异构计算集群管理系统的运行时，在运行时中，资源与环境隔离是核心问题，虽然我们看到有很多前沿的公司与开源软件在视图解决相应问题，但是其底层更彻底的解决方案还是基于操作系统和硬件的底层原语的支持。容器与镜像解决了环境依赖，资源隔离进而奠定未来平台提供多租的基石。</p>
+<p>请读者思考，作业运行期在GPU技术栈下面临了什么新的问题？
+相比传统操作系统，在GPU技术栈还不完善的功能是？</p>
+<h2 id="_3">参考文献<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html">https://man7.org/linux/man-pages/man7/cgroups.7.html</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">https://man7.org/linux/man-pages/man7/namespaces.7.html</a></li>
+<li><a href="https://www.docker.com/">https://www.docker.com/</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/image/">https://docs.docker.com/engine/reference/commandline/image/</a></li>
+<li><a href="https://hub.docker.com/">https://hub.docker.com/</a></li>
+<li><a href="https://www.docker.com/resources/what-container">https://www.docker.com/resources/what-container</a></li>
+<li><a href="https://github.com/NVIDIA/nvidia-docker">https://github.com/NVIDIA/nvidia-docker</a> </li>
+<li>Use the AUFS storage driver</li>
+<li>Making Containers More Isolated: An Overview of Sandboxed Container Technologies</li>
+<li>Jörg Thalheim, Pramod Bhatotia, Pedro Fonseca, and Baris Kasikci. 2018. CNTR: lightweight OS containers. In Proceedings of the 2018 USENIX Conference on Usenix Annual Technical Conference (USENIX ATC '18). USENIX Association, USA, 199–212.</li>
+<li>Edward Oakes, Leon Yang, Dennis Zhou, Kevin Houck, Tyler Harter, Andrea C. Arpaci-Dusseau, and Remzi H. Arpaci-Dusseau. 2018. SOCK: rapid task provisioning with serverless-optimized containers. In Proceedings of the 2018 USENIX Conference on Usenix Annual Technical Conference (USENIX ATC '18). USENIX Association, USA, 57–69.</li>
+<li><a href="https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf">https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf</a></li>
+<li><a href="https://www.nvidia.com/en-us/technologies/multi-instance-gpu/">https://www.nvidia.com/en-us/technologies/multi-instance-gpu/</a></li>
+<li><a href="http://www.rcuda.net/">http://www.rcuda.net/</a></li>
+<li><a href="https://www.slideshare.net/knoldus/union-filesystem-a-building-blocks-of-a-container">https://www.slideshare.net/knoldus/union-filesystem-a-building-blocks-of-a-container</a></li>
+<li><a href="https://www.nvidia.com/en-us/technologies/multi-instance-gpu/">https://www.nvidia.com/en-us/technologies/multi-instance-gpu/</a></li>
+<li><a href="https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf">https://docs.nvidia.com/deploy/pdf/CUDA_Multi_Process_Service_Overview.pdf</a></li>
+<li><a href="https://en.wikipedia.org/wiki/GPU_virtualization">https://en.wikipedia.org/wiki/GPU_virtualization</a></li>
+<li><a href="https://slidetodoc.com/gpu-virtualization-on-vmwares-hosted-io-architecture-micah/">https://slidetodoc.com/gpu-virtualization-on-vmwares-hosted-io-architecture-micah/</a></li>
+<li><a href="https://www.usenix.org/system/files/conference/atc14/atc14-paper-tian.pdf">https://www.usenix.org/system/files/conference/atc14/atc14-paper-tian.pdf</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../7-%E5%89%8D%E8%A8%80/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7-前言" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              7-前言
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%BC%96%E8%AF%91%E5%99%A8%E5%89%8D%E7%AB%AF/First%E9%9B%86%E4%B8%8EFollow%E9%9B%86/" class="md-footer__link md-footer__link--next" aria-label="Next: First集与Follow集" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              First集与Follow集
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.0238f547.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js"></script>
+      
+        <script src="https://cdnjs.loli.net/ajax/libs/pangu/3.3.0/pangu.min.js"></script>
+      
+        <script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

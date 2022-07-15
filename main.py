@@ -29,6 +29,9 @@ def tree(basepath: list, path, lev):
                 continue
             if item_name == 'README.md':
                 continue
+
+            if item_name=='index.md':
+                continue
             filelist.append(item_name)
         elif os.path.isdir(item_path):
             if item_name[0] == '_' or item_name[0] == '.':
@@ -44,6 +47,10 @@ def tree(basepath: list, path, lev):
         item = (dir, '/'.join(new_basepath) + '/', lev,1)
 
         result.append(item)
+        
+        item_list = os.listdir(os.path.join(path, dir))
+        
+        
 
         result += tree(new_basepath, os.path.join(path, dir), lev + 1)
 
@@ -57,37 +64,9 @@ def tree(basepath: list, path, lev):
 
 
 
-def main(path):
+
     
 
-    item_list = os.listdir(path)
-    # print(item_list)
-    dirlist = []
-    filelist = []
-    for item_name in item_list:
-        item_path = os.path.join(path, item_name)
-        if os.path.isfile(item_path):
-            # markdown文件
-            # print(item_path)
-            type_ = item_path.split(".")[-1]
-            if type_ != 'md':
-                continue
-            if item_path[0] == '_':
-                continue
-            if item_path == 'README.md':
-                continue
-            filelist.append(item_path)
-        elif os.path.isdir(item_path):
-            if item_name[0] == '_' or item_name[0] == '.':
-                continue
-            dirlist.append(item_name)
-
-    for dir in dirlist:
-        # print(dir)
-        main(os.path.join(path, dir))
-    for file in filelist:
-        pass
-        # print(file)
 
 
 if __name__ == '__main__':

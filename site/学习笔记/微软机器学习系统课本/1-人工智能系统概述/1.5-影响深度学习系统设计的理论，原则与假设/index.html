@@ -1,0 +1,2794 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
+    
+    
+      
+        <title>1.5-影响深度学习系统设计的理论，原则与假设 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#15" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.5-影响深度学习系统设计的理论，原则与假设
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Python%E8%AF%AD%E8%A8%80/Python%E7%9A%84C%E6%8B%93%E5%B1%95/" class="md-tabs__link md-tabs__link--active">
+        学习笔记
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          学习笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="学习笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          学习笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          深入理解Python语言
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解Python语言" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解Python语言
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Python%E8%AF%AD%E8%A8%80/Python%E7%9A%84C%E6%8B%93%E5%B1%95/" class="md-nav__link">
+        Python的C拓展
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Cuda
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cuda" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cuda
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/Gemm%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        Gemm优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/%E7%BA%BF%E7%A8%8B%E6%A0%BC%E3%80%81%E7%BA%BF%E7%A8%8B%E5%9D%97%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        线程格、线程块与线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cuda/im2col/" class="md-nav__link">
+        im2col
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          深度学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/BatchNormalization%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        BatchNormalization原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B8%8D%E6%98%8E%E7%99%BD%E7%9A%84%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        学不明白的卷积操作
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          深度学习编译器
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习编译器" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习编译器
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_1" type="checkbox" id="__nav_2_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4_1">
+          Pytorch-Internal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pytorch-Internal" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Pytorch-Internal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/Pytorch-Internal/%E4%B8%80%E4%B8%AAConv%E7%AE%97%E5%AD%90%E7%9A%84%E7%94%9F%E5%91%BD%E5%8E%86%E7%A8%8B/" class="md-nav__link">
+        一个Conv算子的生命历程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/Pytorch-Internal/Pytorch%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" class="md-nav__link">
+        Pytorch源码阅读
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" type="checkbox" id="__nav_2_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4_2">
+          论文研读
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="论文研读" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          论文研读
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/DLcompiler%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        DLcompiler综述
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/pyi%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        pyi文件格式
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          微软机器学习系统课本
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="微软机器学习系统课本" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          微软机器学习系统课本
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_1" type="checkbox" id="__nav_2_5_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_1">
+          11-模型压缩与稀疏化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="11-模型压缩与稀疏化" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          11-模型压缩与稀疏化
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.2-%E5%9F%BA%E4%BA%8E%E7%A8%80%E7%96%8F%E5%8C%96%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/" class="md-nav__link">
+        11.2-基于稀疏化的模型压缩
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.1-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        11.1-模型压缩简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11.3-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F/" class="md-nav__link">
+        11.3-模型压缩与硬件加速
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%8C%96/11-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        11-前言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_2" type="checkbox" id="__nav_2_5_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_2">
+          5-深度学习框架的编译与优化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="5-深度学习框架的编译与优化" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          5-深度学习框架的编译与优化
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.1-%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        5.1-深度神经网络编译器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.3-%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.3-内存优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.4-%E5%86%85%E6%A0%B8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.4-内核优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.5-%E7%AE%97%E5%AD%90%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.5-算子调度优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        5-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96/5.2-%E8%AE%A1%E7%AE%97%E5%9B%BE%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        5.2-计算图优化
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_3" type="checkbox" id="__nav_2_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_3">
+          6-分布式训练算法与系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="6-分布式训练算法与系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          6-分布式训练算法与系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.2-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%84%8F%E4%B9%89/" class="md-nav__link">
+        6.2-分布式深度学习的意义
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        6-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%B0%83/" class="md-nav__link">
+        6.6-分布式训练的通信协调
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.1-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        6.1-分布式计算简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B6%E8%A1%8C%E8%AE%AD%E7%BB%83%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        6.4-深度学习并行训练同步方式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.5-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        6.5-分布式训练系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E4%B8%8E%E7%B3%BB%E7%BB%9F/6.3-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB/" class="md-nav__link">
+        6.3-分布式训练算法分类
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_4" type="checkbox" id="__nav_2_5_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_4">
+          1-人工智能系统概述
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="1-人工智能系统概述" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          1-人工智能系统概述
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.1-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8E%86%E5%8F%B2%EF%BC%8C%E7%8E%B0%E7%8A%B6%E4%B8%8E%E5%8F%91%E5%B1%95/" class="md-nav__link">
+        1.1-深度学习的历史，现状与发展
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.3-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90%E4%B8%8E%E7%94%9F%E6%80%81/" class="md-nav__link">
+        1.3-深度学习系统组成与生态
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.2-%E7%AE%97%E6%B3%95%EF%BC%8C%E6%A1%86%E6%9E%B6%EF%BC%8C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E5%8A%9B%E7%9A%84%E8%BF%9B%E6%AD%A5/" class="md-nav__link">
+        1.2-算法，框架，体系结构与算力的进步
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        1-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B7%E4%BE%8B%E8%83%8C%E5%90%8E%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        1.4-深度学习样例背后的系统问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          1.5-影响深度学习系统设计的理论，原则与假设
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        1.5-影响深度学习系统设计的理论，原则与假设
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#151-" class="md-nav__link">
+    1.5.1 抽象-层次化表示与解释
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152-moores-law" class="md-nav__link">
+    1.5.2 摩尔定律（Moore's Law）与算力发展趋势
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#153-priciple-of-localitymemory-hierarchy" class="md-nav__link">
+    1.5.3 局部性原则（Priciple of Locality）与内存层次结构（Memory Hierarchy）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#154-linear-algebradefect-tolerance" class="md-nav__link">
+    1.5.4 深度学习负载的线性代数（Linear Algebra）计算与缺陷容忍（Defect Tolerance）特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#155-parallelamdahls-law" class="md-nav__link">
+    1.5.5 并行（Parallel）加速与阿姆达尔定律（Amdahl's Law）优化上限
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#156-redundancydependability" class="md-nav__link">
+    1.5.6 冗余（Redundancy）与可靠性（Dependability）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    小结与讨论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    参考文献
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_5" type="checkbox" id="__nav_2_5_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_5">
+          8-深度学习推理系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="8-深度学习推理系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          8-深度学习推理系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.2-%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E7%9A%84%E7%A6%BB%E7%BA%BF%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        8.2-模型推理的离线优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.4-%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%9F%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        8.4-推理系统的运行期优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.5-%E5%BC%80%E5%8F%91%E3%80%81%E8%AE%AD%E7%BB%83%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%9A%84%E5%85%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86-MLOps/" class="md-nav__link">
+        8.5-开发、训练与部署的全生命周期管理-MLOps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.1-%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        8.1-推理系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.3-%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        8.3-部署
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        8-前言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_6" type="checkbox" id="__nav_2_5_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_6">
+          9-自动化机器学习系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="9-自动化机器学习系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_6">
+          <span class="md-nav__icon md-icon"></span>
+          9-自动化机器学习系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        9-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9.1-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        9.1-自动化机器学习
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/9.2-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        9.2-自动化机器学习系统与工具设计
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_7" type="checkbox" id="__nav_2_5_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_7">
+          13-人工智能优化计算机系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="13-人工智能优化计算机系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_7">
+          <span class="md-nav__icon md-icon"></span>
+          13-人工智能优化计算机系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        13-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.3-%E8%90%BD%E5%9C%B0%E6%8C%91%E6%88%98/" class="md-nav__link">
+        13.3-落地挑战
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.1-%E7%AE%80%E4%BB%8B%E4%B8%8E%E8%B6%8B%E5%8A%BF/" class="md-nav__link">
+        13.1-简介与趋势
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/13.2-%E5%AD%A6%E4%B9%A0%E5%A2%9E%E5%BC%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BA%94%E7%94%A8/" class="md-nav__link">
+        13.2-学习增强系统的应用
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_8" type="checkbox" id="__nav_2_5_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_8">
+          7-异构计算集群调度与资源管理系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="7-异构计算集群调度与资源管理系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_8">
+          <span class="md-nav__icon md-icon"></span>
+          7-异构计算集群调度与资源管理系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.5-%E5%AD%98%E5%82%A8/" class="md-nav__link">
+        7.5-存储
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.3-%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        7.3-调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.4-%E9%9D%A2%E5%90%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        7.4-面向深度学习的集群管理系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.6-%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4/" class="md-nav__link">
+        7.6-开发与运维
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.1-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        7.1-异构计算集群管理系统简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7-%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        7-前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/7.2-%E8%AE%AD%E7%BB%83%E4%BD%9C%E4%B8%9A%EF%BC%8C%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/" class="md-nav__link">
+        7.2-训练作业，镜像与容器
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          编译原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译原理" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          编译原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_1" type="checkbox" id="__nav_2_6_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6_1">
+          编译器前端
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译器前端" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          编译器前端
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%BC%96%E8%AF%91%E5%99%A8%E5%89%8D%E7%AB%AF/First%E9%9B%86%E4%B8%8EFollow%E9%9B%86/" class="md-nav__link">
+        First集与Follow集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7">
+          深入理解计算机系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解计算机系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解计算机系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_1">
+          链接与加载
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="链接与加载" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          链接与加载
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%8A%A0%E8%BD%BD/ELF%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        ELF文件格式
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2_1" type="checkbox" id="__nav_2_7_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2_1">
+          虚拟化技术
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="虚拟化技术" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_7_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          虚拟化技术
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%AE%B9%E5%99%A8%EF%BC%9F/" class="md-nav__link">
+        如何理解容器？
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2_2" type="checkbox" id="__nav_2_7_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7_2_2">
+          MIT6.828课程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="MIT6.828课程" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_7_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          MIT6.828课程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/%E7%A5%9E%E5%A5%87%E7%9A%84%E9%93%BE%E6%8E%A5/" class="md-nav__link">
+        神奇的链接
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/lab2%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        lab2记录
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.828%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8%E7%9A%84%3F/" class="md-nav__link">
+        计算机是如何启动的?
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux%E4%B8%AD%E7%9A%84rootfs/" class="md-nav__link">
+        Linux中的rootfs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        linux的内存分配机制
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8">
+          C++程序设计
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C++程序设计" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          C++程序设计
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_1" type="checkbox" id="__nav_2_8_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8_1">
+          深入理解Cmake
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深入理解Cmake" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_8_1">
+          <span class="md-nav__icon md-icon"></span>
+          深入理解Cmake
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Cmake/add_subdirectory%E7%94%A8%E6%B3%95/" class="md-nav__link">
+        add_subdirectory用法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/%E5%A4%B4%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%B0%96%E6%8B%AC%E5%8F%B7%E4%B8%8E%E5%BC%95%E5%8F%B7/" class="md-nav__link">
+        头文件中的尖括号与引号
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../C%2B%2B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/Variant%E7%9A%84%E7%94%A8%E6%B3%95/" class="md-nav__link">
+        Variant的用法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_9">
+          应用程序开发
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="应用程序开发" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          应用程序开发
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9_1" type="checkbox" id="__nav_2_9_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_9_1">
+          Python程序开发
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Python程序开发" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_9_1">
+          <span class="md-nav__icon md-icon"></span>
+          Python程序开发
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/Python%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/PyGame%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        PyGame使用指南
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_10">
+          ACM算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ACM算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_10">
+          <span class="md-nav__icon md-icon"></span>
+          ACM算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ACM%E7%AE%97%E6%B3%95/Acwing%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        Acwing学习记录
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#151-" class="md-nav__link">
+    1.5.1 抽象-层次化表示与解释
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152-moores-law" class="md-nav__link">
+    1.5.2 摩尔定律（Moore's Law）与算力发展趋势
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#153-priciple-of-localitymemory-hierarchy" class="md-nav__link">
+    1.5.3 局部性原则（Priciple of Locality）与内存层次结构（Memory Hierarchy）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#154-linear-algebradefect-tolerance" class="md-nav__link">
+    1.5.4 深度学习负载的线性代数（Linear Algebra）计算与缺陷容忍（Defect Tolerance）特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#155-parallelamdahls-law" class="md-nav__link">
+    1.5.5 并行（Parallel）加速与阿姆达尔定律（Amdahl's Law）优化上限
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#156-redundancydependability" class="md-nav__link">
+    1.5.6 冗余（Redundancy）与可靠性（Dependability）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    小结与讨论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    参考文献
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<!--Copyright © Microsoft Corporation. All rights reserved.
+  适用于[License](https://github.com/microsoft/AI-System/blob/main/LICENSE)版权许可-->
+
+<h1 id="15">1.5 影响深度学习系统设计的理论，原则与假设<a class="headerlink" href="#15" title="Permanent link">&para;</a></h1>
+<p>人工智能系统内容保罗万象，涵盖传统计算机体系结构，编译器，操作系统，计算机网络的经典的应用与拓展。同时我们也可以观察到经典的计算机系统相关理论和系统优化方法在深度学习中依然在发挥巨大的作用，我们依然可以将当前很多问题映射和抽象并通过经典理论所解决。那么在展开后面内容之前，我们通过几个代表性理论和在深度学习系统中的应用，以及深度学习作业的独有特点所产生的新问题展开，启发之后我们在学习具体系统问题时形成理论指导。</p>
+<ul>
+<li><a href="#15-影响深度学习系统设计的理论原则与假设">1.5 影响深度学习系统设计的理论，原则与假设</a></li>
+<li><a href="#151-抽象-层次化表示与解释">1.5.1 抽象-层次化表示与解释</a></li>
+<li><a href="#152-摩尔定律moores-law与算力发展趋势">1.5.2 摩尔定律（Moore's Law）与算力发展趋势</a></li>
+<li><a href="#153-局部性原则priciple-of-locality与内存层次结构memory-hierarchy">1.5.3 局部性原则（Priciple of Locality）与内存层次结构（Memory Hierarchy）</a></li>
+<li><a href="#154-深度学习负载的线性代数linear-algebra计算与缺陷容忍defect-tolerance特性">1.5.4 深度学习负载的线性代数（Linear Algebra）计算与缺陷容忍（Defect Tolerance）特性</a></li>
+<li><a href="#155-并行parallel加速与阿姆达尔定律amdahls-law优化上限">1.5.5 并行（Parallel）加速与阿姆达尔定律（Amdahl's Law）优化上限</a></li>
+<li><a href="#156-冗余redundancy与可靠性dependability">1.5.6 冗余（Redundancy）与可靠性（Dependability）</a></li>
+<li><a href="#小结与讨论">小结与讨论</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul>
+<h2 id="151-">1.5.1 抽象-层次化表示与解释<a class="headerlink" href="#151-" title="Permanent link">&para;</a></h2>
+<p>系统会在各个层次抽象不同的表示，在高层方便用户表达算子，在底层则被转换为指令被芯片执行。这样搭积木的方式让整个工具链快速协同发展且能复用（Reuse），大为加速了开发效率与自动化。</p>
+<p>我们一般通过Python语言书写和调用深度学习库完成整个机器学习流水线的构建，但其实刚刚接触到其中一层，从上到下系统已经为我们抽象了多个层次。我们通过下面实例可以了解各个层次的抽象与表达，为之后的学习形成跨层的视角。</p>
+<p>例如图1-5-1.所示，我们通过一个向量加法的实例，从顶到下，看各个层次是如何抽象和层次化标识具体的执行逻辑的：</p>
+<p><center><img src="img/5/5-1-8-dlprogramstack.png" ch="500" /></center>
+<center>图1-5-1. 深度学习程序的抽象与层次化表达 </center></p>
+<ul>
+<li>语言层：Python语言</li>
+</ul>
+<p>在本层可以书写各种控制流（循环），调用库等。</p>
+<p><div class="highlight"><pre><span></span><code>for i in range(10):
+  # 执行vector add
+</code></pre></div>
+- 框架层：TensorFlow, PyTorch等</p>
+<p>例如，我们通过Python调用PyTorch实现一个简单的向量加法。
+<div class="highlight"><pre><span></span><code><span class="n">impor</span> <span class="n">torch</span>
+<span class="o">...</span>
+<span class="n">K</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># 定义向量维度(Dimension)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="c1"># 初始化</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># PyTorch执行向量加法</span>
+</code></pre></div></p>
+<p>在本层，我们可以编写深度学习模型，通过卷积，池化，全连接，注意力机制等算子，组合出复杂的数据流图模型。</p>
+<ul>
+<li>驱动编程库层：CUDA, cuDNN等</li>
+</ul>
+<p>当向量加法执行到CUDA层，将通过下面CUDA编程API进行实现。</p>
+<p>例如，在CUDA层就会实现：
+<div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"></span>
+<span class="c1">// CUDA内核。每个线程执行一个元素的加法</span>
+<span class="n">__global__</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">vecAdd</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 获取全局线程Id</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 确保不越界</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">id</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[]</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// 发起(Launch) vecAdd CUDA内核(Kernel)，通过gridSize和blockSize配置并行线程数量</span>
+<span class="w">    </span><span class="n">vecAdd</span><span class="o">&lt;&lt;&lt;</span><span class="n">gridSize</span><span class="p">,</span><span class="w"> </span><span class="n">blockSize</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">d_a</span><span class="p">,</span><span class="w"> </span><span class="n">d_b</span><span class="p">,</span><span class="w"> </span><span class="n">d_c</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+</code></pre></div></p>
+<ul>
+<li>汇编指令层：NVIDIA GPU中有PTX, SASS等</li>
+</ul>
+<p>PTX 是一种低级并行线程执行虚拟机（Virtual Machine）和指令集架构（ISA），目的是为了跨不同代的GPU支持。PTX 将GPU暴露为并行计算设备。SASS是编译成二进制微码的低级汇编语言，绑定指定代设备，在 NVIDIA GPU 硬件上本地执行。PTX可读性更强，我们下面以PTX实例解释向量加法实现。</p>
+<p>例如，读者可以书写导出或者参考<a href="https://docs.nvidia.com/cuda/ptx-compiler-api/index.html#sample-example">实例</a>。</p>
+<p>下面为通过工具导出的向量加法的PTX指令实例：</p>
+<div class="highlight"><pre><span></span><code>.visible .entry _Z6vecAddPdS_S_i( // .entry 定义内核入口名(Entry Point Name)
+.param .u64 _Z6vecAddPdS_S_i_param_0, // 64位无符号参数_Z6vecAddPdS_S_i_param_0，对应CUDA代码double *a
+.param .u64 _Z6vecAddPdS_S_i_param_1, // 对应CUDA代码double *b
+.param .u64 _Z6vecAddPdS_S_i_param_2, // 对应CUDA代码double *c
+.param .u32 _Z6vecAddPdS_S_i_param_3 // 对应CUDA代码int n
+)
+{
+.reg .pred %p&lt;2&gt;; // 定义谓词(Predicate)寄存器变量，用于放置比较运算符结果
+.reg .b32 %r&lt;6&gt;; // 定义一组32比特无类型(Untyped)，寄存器变量，未来用于存放常量数组索引
+.reg .f64 %fd&lt;4&gt;; // 定义一组64比特浮点型，寄存器变量，用于存取中间结果，未来用于存放输入参数的数据地址
+.reg .b64 %rd&lt;11&gt;; // 定义一组64比特无类型(Untyped)，寄存器变量，未来用于放置存储结构的数据地址
+
+
+ld.param.u64 %rd1, [_Z6vecAddPdS_S_i_param_0]; // a加载到%rd1寄存器
+ld.param.u64 %rd2, [_Z6vecAddPdS_S_i_param_1]; // b加载到%rd2寄存器
+ld.param.u64 %rd3, [_Z6vecAddPdS_S_i_param_2]; // c加载到%rd3寄存器
+ld.param.u32 %r2, [_Z6vecAddPdS_S_i_param_3]; // n加载到%r2寄存器
+mov.u32 %r3, %ctaid.x; // 加载blockIdx.x到寄存器%r3
+mov.u32 %r4, %ntid.x; // 加载blockDim.x到寄存器%r4
+mov.u32 %r5, %tid.x; // 加载threadIdx.x到寄存器%r5
+mad.lo.s32 %r1, %r4, %r3, %r5; // 对应CUDA代码int id = blockIdx.x * blockDim.x + threadIdx.x
+setp.ge.s32     %p1, %r1, %r2; // %p = (%r1 &gt;= %r2)，%r1代表id，%r2代表n
+@%p1 bra BB0_2; // 对应CUDA代码if (id &lt; n)，如果id &lt; n为假(False)也就是id &gt;= n为真(True)，跳转到BB0_2
+
+cvta.to.global.u64 %rd4, %rd1; // 转换%rd1也就是a为全局内存地址到寄存器%rd4
+mul.wide.s32 %rd5, %r1, 8; // 因为当前地址为64比特也就是8字节，id * 8的结果放置到寄存器%rd5，用于未来寻址数组中对应位置数据
+add.s64 %rd6, %rd4, %rd5; // 数组a全局地址%rd4加id * 8结果%rd5，得到数组第i元素地址放置于%rd6
+cvta.to.global.u64 %rd7, %rd2; // 转换%rd2也就是b为全局内存地址%rd7，
+add.s64 %rd8, %rd7, %rd5; // 数组b全局地址%rd7加id * 8结果%rd5，得到数组第i元素地址放置于%rd8
+ld.global.f64 %fd1, [%rd8]; // 加载全局内存数组b的地址[%rd8]（也就是第i个元素）数据到寄存器%fd1
+ld.global.f64 %fd2, [%rd6]; // 加载全局内存数组a的地址[%rd8]（也就是第i个元素）数据到寄存器%fd2
+add.f64 %fd3, %fd2, %fd1; // 相加寄存器中a,b第i元素到寄存器%fd3，对应代码a[id] + b[id]
+cvta.to.global.u64 %rd9, %rd3; // 转换%rd3也就是c的地址转换为为全局内存地址到寄存器%rd9
+add.s64 %rd10, %rd9, %rd5; // 数组c全局地址%rd9加id * 8结果%rd5，得到数组第i元素地址放置于%rd10
+st.global.f64 [%rd10], %fd3; // 将寄存器%fd3的数据也就是a[id] + b[id]结果，存储到c在全局内存中的[%rd10]对应地址空间，也就是第i个元素
+
+BB0_2:
+ret; // 返回
+}
+</code></pre></div>
+<ul>
+<li>机器码</li>
+</ul>
+<p>每条汇编指令则会在内存中编码（Encode）表示为"01010010"形式的二进制序列，最终被芯片解码（Decode）执行。</p>
+<ul>
+<li>硬件执行单元：ALU，控制单元，寄存器，总线等</li>
+</ul>
+<p>例如，在<a href="https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html">冯诺依曼架构</a>的GPU中分别由指令流水线进行指令存储，加载，解码，并执行指令。通过指令控制，由数据流水线，将数据加载到寄存器，放入ALU执行并将结果写回内存。</p>
+<p>通过以上从上层到下层的抽象，我们可以看到，越上层对用户隐藏的细节越多，开发效率越高，工具与系统的演化和构建就像 <strong><em>搭积木</em></strong>。系统工作需要在适合的层做相应的抽象和展开工作，这些需要在之后的具体工作中进行取舍。</p>
+<h2 id="152-moores-law">1.5.2 摩尔定律（Moore's Law）与算力发展趋势<a class="headerlink" href="#152-moores-law" title="Permanent link">&para;</a></h2>
+<p>摩尔定律（Moore's law）是由英特尔（Intel）创始人之一戈登·摩尔提出的。集成电路上可容纳的晶体管数目，约每隔两年便会增加一倍。而英特尔首席执行官大卫·豪斯（David House）提出且经常被引用的是预计18个月会将芯片的性能提高一倍（即更多的晶体管使其更快）。在GPU领域，<a href="https://en.wikipedia.org/wiki/Huang%27s_law#:~:text=Moores%20law%20would%20predict%20a,the%20new%20'law'%20possible.">黄氏定律</a>是英伟达创始人黄仁勋提出，即图形处理器(GPU) 的发展速度比传统中央处理单元 (CPU) 的发展速度要快得多，GPU 的性能每两年将翻一番以上。</p>
+<p>有多种论调在讨论摩尔定律已死，当然也有一些论调认为摩尔定律还存在，只不过是需要以另一种方式来理解，例如台积电企业研究副总裁Philip Wong 博士在Hotchips 2019上提出摩尔定律未死(<a href="https://www.youtube.com/watch?v=O5UQ5OGOsnM">Moore's Law is not Dead</a>)，其出发点在于“处理器速度时钟速度已经饱和并不意味着摩尔定律已经失效，就像摩尔博士很多很多年前预测的那样，<strong><em>密度</em></strong>（例如，晶体管，逻辑门，SRAM等）不断增加是摩尔定律持续存在的驱动力”。当时还在Intel的Jim Keller也层做过<a href="https://eecs.berkeley.edu/files/jim-keller-moores-law-not-dead">"Moore’s Law is Not Dead"</a>的演讲，并提出：“要理解计算领域的这种不减增长，我们需要将摩尔定律晶体管数量指数解构为计算堆栈中众多独立创新的输出——在硅工艺技术、集成电路设计、微处理器架构和软件方面。虽然晶体管性能和功率等某些向量的收益确实在递减，但晶体管架构、微处理器架构、软件和新材料等其他向量的收益却在增加。”所以我们也看到 <strong><em>软件系统</em></strong> 也扮演越来越重要的角色，<strong><em>软硬件协同设计</em></strong> 可以进一步挖掘硬件性能。例如，我们在NVIDIA的GPU中就可以观察到这种趋势，H100中已经引入变换器引擎，之前系列引入张量核，就是利用算法层的优化思路，如稀疏性等引入到硬件设计中，根据负载特点进行协同优化。</p>
+<p>除了随着芯片不断提升算力让系统性能越来越快，我们发现芯片和系统性能还会受到其他约束（Constraint）所限制，这些约束衍生了系统层的系统与系统算法工作设计动机（Motivation）。例如：</p>
+<ul>
+<li><strong><em><a href="http://www.edwardbosworth.com/My5155_Slides/Chapter01/ThePowerWall.htm">功耗墙</a>约束</em></strong>：</li>
+<li>1990 年代末和2000年代初的设计目标是提高时钟频率，这是通过在更小的芯片上添加更多晶体管来实现的。不幸的是，这增加了CPU芯片的功耗，且超出了廉价冷却技术的能力。所以这种约束让工业界有两种路线，一种是采用更复杂的冷却技术，一种是转向多核设计。我们目前看到的针对人工智能设计的芯片也都是多核或者是众核的。
+  参考表1-5-1.受限于功耗墙，我们可以观察到GPU不同代之间的最大热设计功率（Max Thermal Design Power）每年的增幅比例并不高。同时我们在NVIDIA GPU中通过nvidia-smi命令也可以看到，当GPU的温度超出一定阈值，GPU会减速或者关闭。
+  例如下面的实例中，我们查询Nvidia P40 GPU可以获取到其对温度（Temperature）的约束，达到92C GPU会减速（Slowdown），达到95度，GPU会停止（Shutdown）。
+  <div class="highlight"><pre><span></span><code>  Temperature
+      GPU Current Temp                  : 26 C
+      GPU Shutdown Temp                 : 95 C
+      GPU Slowdown Temp                 : 92 C
+</code></pre></div>
+  在转向多核设计角度，一般我们会看到软硬件通过以下方式应对挑战：（1）硬件层面：例如，NVIDIA不仅推出GPU，还推出<a href="https://www.nvidia.com/en-us/data-center/dgx-systems/">DGX系统</a>和<a href="https://www.nvidia.com/en-us/data-center/dgx-pod/">DGX Pod</a>，互联更多的GPU，打破单卡瓶颈。（2）软件层面：2.1 在后面会看到越来越多的大模型采用多卡或分布式训练的方式打破单卡算力瓶颈 2.2 推理系统在移动端会被功耗所约束需要通过压缩量化等手段精简模型。</li>
+<li><strong><em>暗硅 (Dark Silicon)与异构硬件（Heterogeneous Hardware）</em></strong> 的趋势：2010年，ARM 的 CTO Mike Muller 将在 EE Times 的Designing with ARM 虚拟会议上发表<a href="https://www.eetimes.com/arm-cto-warns-of-dark-silicon/">暗硅警告（Warns of Dark Silicon）</a>主题演讲。根据 Mike 的说法，尽管工艺缩小到 11 nm，但固定的功率预算（Fixed Power Budgets）可能很快就无法利用芯片（Chip）上的所有可用晶体管（Transistors）。如果没有新的创新，设计人员可能会发现自己处于“暗硅 (Dark Silicon)”时代，能够制造出他们无法负担得起的高密度设备。Olivier Temam在2010年ISCA中提到，<a href="https://pages.saclay.inria.fr/olivier.temam/homepage/ISCA2010web.pdf">对暗硅问题，一种结果是向异构系统的可能演变：程序分解为“算法序列”，每个算法在任何给定时间映射到一个或几个加速器：晶体管的一小部分在任何给定时间使用（规避“暗硅”问题）</a>。例如图1-5-1. 现在的深度学习程序虽然都是在一套Python脚本书写，但是当翻译到底层执行，具体的会拆分到异构设备进行指令执行，的数据加载与作业调度控制在CPU完成，模型训练在GPU完成，也有公司将推理未来部署于FPGA进行加速。异构计算的趋势会造成后面编译器章节对异构平台进行编译的需求，以及集群资源管理系统对异构硬件资源进行调度与资源分配的需求。
+当前异构计算的很多工作在数据中心异构和云化的趋势下常常会看到和下面主题相关的系统工作和设计思路：</li>
+<li>卸载（Offloading）：对不断增长的计算CPU越来越难以负担，卸载成为一种行之有效的方式。（1）一种思路是卸载控制平面或协议栈到硬件，减少CPU中断和开销（Overhead），和用户内核态数据拷贝，例如，DMA，<a href="https://conferences.sigcomm.org/sigcomm/2018/files/tp/sigcomm18-tp-06-rdma-and-hardware-support.pdf">RDMA</a>，<a href="https://developer.nvidia.com/blog/gpudirect-storage/">GPUDirect Storage</a>等设计思路。（2）另一种是借鉴<a href="https://en.wikipedia.org/wiki/Exokernel">Exokernel</a>的思想，卸载内核态软件栈（例如，网络栈，<a href="http://www.cs.columbia.edu/~junfeng/papers/bpf-storage-hotos18.pdf">IO处理栈</a>）逻辑到用户态，通过内核旁路（Kernel Bypassing）减少内核态与用户态切换与数据拷贝，例如，<a href="https://docs.nvidia.com/networking/display/VMAv883/Introduction+to+VMA">Mellanox Messaging Accelerator (VMA) library</a>。（3）还有一种直接卸载密集计算：适合SIMD计算模型的负载（例如，深度学习模型的矩阵运算等）卸载到以SIMD为执行模型的GPU等加速器，适合<a href="https://en.wikipedia.org/wiki/Multiple_instruction,_multiple_data">多指令流多数据流（Multiple Instruction Multiple Data）简称MIMD</a>（例如，字符串数据预处理等）负载卸载到<a href="https://en.wikipedia.org/wiki/Data_processing_unit">DPU</a>等新兴加速器。除去负载的逻辑特点，如果用户的任务负载程序与指令稳定变化小（例如，一些特定场景的模型推理），也较为适合放入 FPGA 中硬件级定制加速器处理逻辑。</li>
+<li>分解（Dissaggregation）：数据中希望计算，内存，网络分解（Dissaggregation）提供更加灵活多样适合多样数据中心负载需求的资源配置，例如，以分解内存（Dissaggregation Memory）管理为代表的工作（<a href="https://dl.acm.org/doi/10.1145/3477132.3483561">MIND</a>等）需要重新设计和卸载页表等基本功能。</li>
+<li>
+<p>抽象与统一管理（Unified Management）：对计算或存储异构硬件，常常抽象在统一的空间内进行管理，最终达到对用户透明。例如，NVIDIA的<a href="https://developer.nvidia.com/blog/unified-memory-cuda-beginners/">统一内存（Unified Memory）</a>就类似传统的虚拟内存（Virtual Memory）的思想统一管理GPU显存和主存。Intel的<a href="https://www.oneapi.io/">oneAPI</a>统一编程模型，管理CPU和GPU算力。也有在框架层进行抽象与统一管理的工作，例如，<a href="https://www.usenix.org/conference/osdi20/presentation/jiang">BytePS</a>协同利用CPU和GPU训练模型。
+<center><img src="img/5/5-1-9-Heterogeneoushardware.png" ch="500" /></center>
+<center>图1-5-2. 深度学习程序异构计算 (<a href="">图片引用</a>)</center></p>
+</li>
+<li>
+<p><strong><em><a href="https://en.wikipedia.org/wiki/Random-access_memory#Memory_wall">内存墙</a>约束</em></strong>：</p>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Random-access_memory#Memory_wall">“内存墙”</a>是芯片与芯片外的内存之间越来越大的速度差距。造成这种差距的一个重要原因是超出芯片边界的有限通信带宽，也称为带宽墙。例如，从 1986 年到 2000 年，CPU 速度以每年 55% 的速度提高，而内存速度仅提高了 10%。鉴于这些趋势，预计内存延迟将成为计算机性能的压倒性瓶颈。虽然增速比例不同，但是这种通常计算发展更快的现状其实我们在GPU的发展过程中也可以观察到，例如表1-5-1.所示，NVIDIA H100相比A100在FP32 Vector上是48TFLOPS相比19.5TFLOPS的近2.46倍提升，但是内存带宽只是2TB/s (PCIe版GPU)比1,935GB/s （PCIe版GPU）的1.06倍提升，访存落后于计算的提升速度，如果我们考虑新型号GPU中计算单元进行稀疏，低精度量化加速，这个差距可能会变得更大。可以认为在人工智能领域内存墙这种情况还存在。一般应对内存墙有以下思路进行缓解：（1）利用缓存减少数据访存搬运，同时我们在后面的编译优化等章节会看到很多策略是尽可能利用片上共享内存或者GPU显存，尽可能的减少数据搬运。（2）<a href="https://ieeexplore.ieee.org/document/330035">关联处理（Associative Processing）的思想和关联处理器（Associative Processors）</a>，将计算直接卸载到数据侧，例如，<a href="https://blogs.apache.org/hbase/entry/coprocessor_introduction">IMCA加速器设计</a>。除了硬件支持，软件层也可以借鉴其思想。在传统大数据系统中，Spark等尽可能搬运UDF，将计算放在数据块所在节点处理，减少搬运数据，以及Big Table和HBase的<a href="https://blogs.apache.org/hbase/entry/coprocessor_introduction">协处理器（Coprocessor）</a>设计都是关联处理思想的延伸。（3）减少数据本身，例如，利用稀疏性与低精度量化，减少待计算需要传递的的数据量。（4）计算屏蔽数据搬运开销，例如，GPU通过更小开销的硬件线程切换设计，让需要访存的线程让出计算核，进而提升整体一批线程的计算吞吐，减少访问的开销。</li>
+</ul>
+<style>table{margin: auto;}</style>
+<table>
+<thead>
+<tr>
+<th>GPU 规格（Specification）</th>
+<th>32位浮点运算量（FP32 FLOPS）</th>
+<th>访存带宽（Memory Bandwidth）</th>
+<th>内存尺寸（Memory Size）</th>
+<th>最大热设计功率（Max Thermal Design Power）</th>
+<th>发布年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.nvidia.com/en-us/data-center/h100/">H100 PCIe</a></td>
+<td>48 teraFLOPS + 800 teraFLOPS* | 400 teraFLOPS</td>
+<td>2TB/s</td>
+<td>80GB</td>
+<td>350W</td>
+<td>2022年3月</td>
+</tr>
+<tr>
+<td><a href="https://www.nvidia.com/en-us/data-center/a100/">A100 PCI2</a></td>
+<td>19.5 TFLOPS + 156 TFLOPS | 312 TFLOPS* Tensor Core</td>
+<td>1,935GB/s</td>
+<td>80GB HBM2e</td>
+<td>300W</td>
+<td>2020年5月</td>
+</tr>
+<tr>
+<td><a href="https://www.nvidia.com/en-us/data-center/v100/">V100S PCIe</a></td>
+<td>16.4 teraFLOPS + 130 teraFLOPS Deep Learning</td>
+<td>1134GB/s</td>
+<td>32GB  HBM2</td>
+<td>250W</td>
+<td>2017年12月</td>
+</tr>
+<tr>
+<td><a href="https://www.nvidia.com/en-us/data-center/tesla-p100/">P100 PCIe</a></td>
+<td>9.3 teraFLOPS</td>
+<td>732 GB/s</td>
+<td>16GB</td>
+<td>N/A</td>
+<td>2016年7月</td>
+</tr>
+</tbody>
+</table>
+<p><center>表1-5-1. 不同数据中心Nvidia GPU型号的FP32浮点运算量和访存带宽统计</center></p>
+<p>在了解以上趋势后，会启发我们看到为何后面章节中大量的系统设计优化，利用多核和分布式计算，以及为何减少数据搬运的原因。因为单纯依靠单计算硬件达到的算力是有上限约束，我们还要通过扩展和异构硬件不断打破上限功耗墙与暗硅约束，同时我们还需要软硬件协同通过系统与系统算法设计进一步提升效率和性能逼近上限，绕过内存墙等约束。</p>
+<h2 id="153-priciple-of-localitymemory-hierarchy">1.5.3 局部性原则（Priciple of Locality）与内存层次结构（Memory Hierarchy）<a class="headerlink" href="#153-priciple-of-localitymemory-hierarchy" title="Permanent link">&para;</a></h2>
+<p>由1.5.2我们看到，由于内存墙，算法执行过程中一种方式是尽可能的减少访存，利用缓存，本小节我们通过内存的层次结构，和跨层次之间利用算法的局部性，如何减少访存。</p>
+<p>深度学习的访存特点是：
+- 对模型整体的每轮迭代，读取批次数据，这部分会随机采样数据进行读取。
+- 对模型中的每个算子计算可以转换为底层的循环执行，这其中对输入输出数据的访问有一定的缓存复用机会。</p>
+<p>如图1-5-3所示，计算机的内存层次结构很深，不同层级的访存时间，带宽，空间和成本都不同，但遵循一定的递增或递减的关系。</p>
+<p><center><img src="img/5/5-1-3-MemoryHierarchy.png" ch="500" /></center>
+<center>图1-5-3. 内存存储层级 (<a href="">图片引用</a>)</center></p>
+<p>图1-5-3. 内存层次结构(Memory Hierarchy)<a href="https://diveintosystems.org/book/C11-MemHierarchy/mem_hierarchy.html">图片引用</a>
+在图中我们看到传统的内存层次结构问题总结中没有覆盖GPU和AI加速器内存，缓存和寄存器，但是其相对规律和上图是一致的，我们可以通过PCIe总线将AI加速器与当前已有体系结构互联，让计算机利用AI加速器加速模型的训练与推理。</p>
+<p><center><img src="img/5/5-1-13-storagevslogistics.png" ch="500" /></center>
+<center>图1-5-4. 内存存储层级 vs 物流仓储配送流程(<a href="https://www.zhitongcaijing.com/content/detail/433344.html">图片引用</a>)</center></p>
+<p>如图1-5-4我们可以将存储和访存类比为 <strong><em>物流的仓库与配送</em></strong> ，进而更加具象的理解其中的设计与权衡。末端站点像缓存或寄存器，有更小的空间，更高的租金成本，更快的送达速度。仓库就像磁盘或内存，有更大的空间，更低的租金成本，更慢的送达速度。</p>
+<p>图1-5-5中我们可以看到GPU显存和主存之间通过PCIe总线传输数据，一般是初始时的模型权重，以及每批次的输入数据张量。</p>
+<p><center><img src="img/5/5-1-2-host_device.png" ch="500" width="600" height="300"  /></center>
+<center>图1-5-5. 主机和GPU之间的数据传输， GPU显存和主存关系 (<a href="https://www.telesens.co/2019/02/16/efficient-data-transfer-from-paged-memory-to-gpu-using-multi-threading/">图片引用</a>)</center></p>
+<p>图1-5-6中我们可以看到GPU显存和缓存之间的数据流动。</p>
+<p><center><img src="img/5/5-1-1-gpumem.png" ch="500" width="400" height="300" /></center>
+<center>图1-5-6. GPU缓存与GPU内存数据传输，GPU显存与缓存关系(<a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html">图片引用</a>)</center></p>
+<p>接下来我们以一个算子也就是卷积转换为矩阵乘计算后为例，看负载的局部性，这个情况下假设数据已经完成图1-5-5中读取，数据在GPU显存，所以只需要关注图1-5-6中的GPU显存与缓存之间的关系，分析矩阵乘的访存的局部性。</p>
+<p>如下程序所示，我们通过A,B进行通用矩阵乘计算产生矩阵C（通用矩阵乘常常用于全连接算子和卷积被im2col转化后的GEMM卷积算子中的运算）。通过分析我们看到，其使用
+<span class="arithmatex"><span class="MathJax_Preview">m*n + m*k + k*n</span><script type="math/tex">m*n + m*k + k*n</script></span>的空间进行单算子的运算，读者思考以下问题：
+1. 假设缓存线为$ x <span class="arithmatex"><span class="MathJax_Preview">字节，如何执行其中的乘加运算，访存次数最低？
+2. 当</span><script type="math/tex">字节，如何执行其中的乘加运算，访存次数最低？
+2. 当</script></span>m<em>n + m</em>k + k*n &gt; h<span class="arithmatex"><span class="MathJax_Preview">，</span><script type="math/tex">，</script></span>h$为片上内存尺寸（例如，GPU共享内存和缓存），应该怎么办？
+以上两个问题既驱动软件优化（编译优化），也驱动硬件发展（加速器更大的片上内存设计），读者可以在后续的编译优化和体系结构阅读更为细致的讲解。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 矩阵 A[m][k] 和 B[k][n] 进行GEMM运算产生 C[m][n]</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">n</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p><strong><a href="https://en.wikipedia.org/wiki/Locality_of_reference">局部性</a>原则</strong>：</p>
+<p>在计算机科学中，引用的局部性，也称为局部性原理，是处理器在短时间内重复访问同一组内存位置的趋势。参考局部性有两种基本类型——时间局部性和空间局部性。时间局部性是指在相对较短的时间内重复使用特定数据和资源。空间局部性（也称为数据局部性）是指在相对较近的存储位置内使用数据元素。</p>
+<p><center><img src="img/5/locality.gif" ch="500" width="600" height="400"  /></center>
+<center>图1-5-7. 空间和时间局部性 (<a href="https://stackoverflow.com/questions/7638932/what-is-locality-of-reference">图片引用</a>)</center></p>
+<p>如图1-5-7.所示，如果我们打印按执行周期（Cycle）为横轴，一个循环程序的访存地址为纵轴，我们可以观察到，时间局部性(Temporal Locality）就是图中呈现的连续执行周期内，一直访问同一个地址，空间局部性(Spatial Locality)就是一段时间内访问连续的地址空间（例如，在同一个缓存线（Cache Line）内的数据）。如果以一定的粒度（例如，缓存线64 Byte）加载数据，这样就可以减少访存次数，让每次加载都是有效的。这就像物流运输中，每次都让货车满载，而不是每次只放一箱货物，发多次货运车辆。</p>
+<ul>
+<li>时间局部性(Temporal Locality)：</li>
+<li>通常我们在执行一些迭代计算（例如，循环）中，会在不远的未来再次访问模块地址空间，如果我们能摸清这个规律，利用这种时间局部性，在当前内存达到上限驱逐(Evict)这块地址空间数据之前再次访问，就能够减少再次加载这块数据的开销，提升整体性能和效率。这种优化常常应用于算子内核内部的循环计算中，或者粒度拓展到训练迭代的周期性加载批次数据中。</li>
+<li>空间局部性(Spatial Locality)：</li>
+<li>由于内存和总线处于效率和性能考虑，不同存储层级之间的读写最小单元并不是1个字节（例如，通常主存会设128字节的缓存线，加载数据到缓存。磁盘会设置512字节作为块大小作为最小的读写粒度。PCIe会设置最大有效载荷(Maximum Payload）大小为主存缓存线大小来控制传递的数据粒度和效率。GPU也会设置缓存线。），这样就需要系统跨内存加载数据时，尽可能不空载和不会近期访问的数据，类似让“物流”运输更加高效，塞满货车为近期就要使用的商品，提升效率。这种优化遍布于各个内存层次之间的数据搬运中。</li>
+</ul>
+<p>那么接下来，我们假设GEMM实例中M = 3，N = 3，K = 3（常用卷积核大小为3X3），那么我们收集其访存地址（<a href="src/gemm_locality.cpp">参考实例</a>），并可视化如图1-5-8.所示的散点图，可以观察到图1-5-8.中不同数组的访存存在一定的空间（数组C）和时间局部性（数组A），当前配置下，数组B需要间隔2次才访问到地址相邻数据，需要间隔8次访问到同一块内存地址。
+<div class="highlight"><pre><span></span><code>...
+C[m][n] += A[m][k] * B[k][n];
+printf(&quot;%d \n&quot;, &amp;A[m][k]);
+printf(&quot;%d \n&quot;, &amp;B[k][n]);
+printf(&quot;%d \n&quot;, &amp;C[m][n]);
+...
+</code></pre></div></p>
+<p><center><img src="img/5/5-1-10-gemmlocality.png" ch="500" width="1000" height="500"  /></center>
+<center>图1-5-8. GEMM访存分析</center></p>
+<p>以上的分析方法和思路是同样适合于其他两层之间的存储进行访存优化设计的，那么我们可以总结各个内存层次结构结构中的利用局部性的例子和机会：</p>
+<ul>
+<li>GPU L1, L2缓存：</li>
+<li>片上缓存较小，对算子内计算负载进行切片以及访存调度优化是减少缓存失效是常见思路。深度学习编译器关注循环(Loop)的块(Tile)优化很大程度上因为缓存较小引起。</li>
+<li>
+<p>缓存预取(Prefetch)指令设计：例如在NVIDIA GPU的PTX指令中，提供缓存预取指令，此例子通过预取指令加载数据到L2缓存<a href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html">"<code>ld.global.L2::64B.b32   %r0, [gbl]; // Prefetch 64B to L2</code>"</a>。</p>
+</li>
+<li>
+<p>GPU显存DRAM（与主存通过PCIe总线互联）：</p>
+</li>
+<li>GPU显存和主存之间通常传输的是批次(Batch)数据和模型。可以利用深度学习模型对批次数据的访问时间局部性做相应优化，例如可以通过<a href="https://dl.acm.org/doi/10.5555/3195638.3195660">vDNN</a>等方式对假设已知访存模式情况下的数据预取与卸载。</li>
+<li>主存：</li>
+<li>主存和文件系统之间一般传输的是数据，和模型文件，可以提前下载和准备好数据文件，并做好缓存。</li>
+<li>对频繁访问的磁盘数据，也可以将缓存逻辑交给操作系统管理。</li>
+<li>本机磁盘存储：</li>
+<li>高效和统一的顺序文件存储格式能够减少随机读写小文件的问题。</li>
+<li>本地磁盘存储也可以充当云存储的缓存，例如，<a href="https://github.com/Azure/azure-storage-fuse">Azure Blob Fuse</a>。</li>
+<li>网络与云存储：</li>
+<li>缓存文件系统中数据或者预取数据可以减少网络或云存储中文件的读取代价，例如：<a href="https://www.alluxio.io/">Alluxio</a>。</li>
+</ul>
+<p><strong><em>访存一定会成为瓶颈吗？</em></strong></p>
+<p>我们还可以通过 <strong><em><a href="https://en.wikipedia.org/wiki/Roofline_model">Roofline</a>性能分析模型</em></strong> 进行分析到底当前任务是计算受限（Compute-Bound）还是内存受限（Memory-Bound）。
+例如，针对上面的GEMM，我们分析其<a href="https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation">乘加运算（Multiply Accumulate简称 (MAC)）</a>为<span class="arithmatex"><span class="MathJax_Preview">M \times N \times K</span><script type="math/tex">M \times N \times K</script></span>，其需要访问的内存数组大小为 <span class="arithmatex"><span class="MathJax_Preview">M \times K + K \times N + M \times N</span><script type="math/tex">M \times K + K \times N + M \times N</script></span>，那么随着不同的M，N，K取值（深度学习模型的不同超参数配置），其Roofline模型的表现会呈现不同的差异，这里读者可以分析其曲线在不同的配置下呈现计算受限还是内存受限的表现。
+在历史上的系统设计中，我们一般是抓住核心瓶颈进行优先优化，非核心瓶颈如果处于不同数量级的影响可以暂时忽略。所以我们会看到一些现象，在历史某个时期就是某个环节本可以优化部分做的并不高效，直到硬件发展到这个环节成为核心瓶颈，系统优化才着重针对这部分优化。对系统做相对定量分析在系统设计十分必要的。</p>
+<p><strong><em>缓存一致性约束</em></strong></p>
+<p>同时如果是新设计出的缓存系统进行作业加速（例如，缓存云文件系统数据到多节点内存），由于信息产生了副本（Replication），工程师仍要面对类似传统的多核系统下的缓存一致性（Cache Coherence）问题，可以参考<a href="https://en.wikipedia.org/wiki/MESI_protocol">MESI协议</a>等设计新的协议约束当前计算负载任务，保证一致性。</p>
+<h2 id="154-linear-algebradefect-tolerance">1.5.4 深度学习负载的线性代数（Linear Algebra）计算与缺陷容忍（Defect Tolerance）特性<a class="headerlink" href="#154-linear-algebradefect-tolerance" title="Permanent link">&para;</a></h2>
+<p><strong>线性代数</strong>：大部分的深度学习算子可以抽象为线性代数运算，如通用矩阵乘（GEMM）。如图1-5-9所示，深度学习模型由很多的算子像积木一样组合而成，而每个算子又可以转换为对应的矩阵运算或非线性函数运算，而之后可以利用加速器（Accelerator）进行加速执行。例如，卷积可以通过im2col转换为通用矩阵乘。而矩阵乘在编译器中可以得到大量的优化，同时无论是GPU还是ASIC都可以为其设计专用加速器件。例如，NVIDIA GPU通过<a href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads">单指令多线程（SIMT）</a>进行矩阵运算加速，单指令多线程 (SIMT) 是一种用于并行计算的执行模型，将单指令多数据 (SIMD) 与多线程相结合。Google TPU通过经典的<a href="https://en.wikipedia.org/wiki/Systolic_array">脉动阵列（Systolic Array）</a>定制矩阵乘加速单元（Matrix Multiply Unit）。</p>
+<p><center><img src="img/5/5-1-12-modeltomatrix.png" ch="500" width="1000" height="500"  /></center>
+<center>图1-5-9. 深度学习模型转换为底层矩阵运算，并在ASIC加速器为其定制的专用器件上进行加速 (<a href="">图片引用</a>)</center></p>
+<p>由于矩阵运算含有较少的的控制流，且计算之间依赖少，适合并行计算。大量的矩阵乘等计算让硬件可以通过单指令多数据流（SIMD）进行指令流水线精简设计，并将更多的片上资源用于计算，如图1-5-10所示。或者在更高的层次上通过多卡或分布式计算方式进行加速。这种特性的应用我们将在1.5.5中进行总结。同时我们也看到，由于矩阵计算早在几十年前在科学计算与高性能计算（HPC）领域有过大量的成熟研究，在深度学习系统领域也有很多工作会借鉴并优化传统科学计算与高性能计算领域的系统设计与开源组件。</p>
+<p><center><img src="img/5/5-1-4-sisd-simd.png" ch="500" width="600" height="300"  /></center>
+<center>图1-5-10. SISD对比SIMD (<a href="">图片引用</a>)</center></p>
+<p>如下图所示，我们通过A,B进行通用矩阵乘计算产生矩阵C（全连接，卷积和平均池化等通常可以转换为通用矩阵乘）。但是我们观察到，下面都是标量的操作，如果每个线程都启动进行标量运算，相当于每个线程都是一个指令流和数据流，但是每个线程实际执行的是相同指令，造成了指令访存和流水线的浪费。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 矩阵 A[m][k] 和 B[k][n] 进行GEMM运算产生 C[m][n]</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">n</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>思考如果一次计算一批数据，例如16个标量，其实执行的指令一致，差别主要在数据，如下代码所示：</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="n">m</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 以下一批数据计算是否可以通过特定指令或者加速器架构达到融合批量计算？减少指令流水线开销？</span>
+<span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"> </span>
+<span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">16</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="p">...</span><span class="w"></span>
+<span class="w">      </span><span class="n">C</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">16</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">16</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+上面就是单指令流多数据流（SIMD）的思想，让相同指令处理的数据流被同一个指令流控制。</p>
+<ul>
+<li>为了利用SIMD，一种方式是指令层提供向量化（Vectorization）指令（例如，<a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA指令集</a>，融合乘加运算FMA指令集（Fused Multiply Add）结合了乘法和加法运算，可以通过单一指令完成乘加运算），仍利用通用的CPU，相当于一种软件层的SIMD。</li>
+<li>另一种方式就是直接在硬件层将指令流水线等器件的空间去冗余，排布更多的计算单元，也就是GPU等加速器的思路，其提供SIMD的一种方式SIMT作为执行模型，单指令多线程（Single Instruction Multiple Threads），同时提供CUDA并行编程模型和<a href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#floating-point-instructions-fma">FMA</a>等向量化PTX指令。这种方式很适合矩阵计算，因为其控制流少，一批线程（在NVIDIA GPU中称作束（Warp），一般为32个线程为一个束统一调度，执行相同指令处理不同数据）可以在很长时间内执行相同指令，所以对适合编译和转换为矩阵计算的上层应用（深度学习，图像处理等），非常适合采用GPU进行加速。但是其劣势读者可以思考？如果未来深度学习模型中由于动态性需求出现大量控制流（If/Else，For/While循环等）需要如何设计新的硬件或者软件？
+例如，在GPU中，遇到控制流时，一般中称这种现象叫做<a href="https://people.maths.ox.ac.uk/gilesm/cuda/lecs/lec3-2x2.pdf">束发散（Warp Divergence）</a>问题。如下实例所示，GPU可以在编译时确定所有束（Warp）的线程执行相同指令。如果分支很大，编译器（例如，NVCC）将代码插入到检查经线中的所有线程是否采用相同的分支（其称作束投票（Warp Voting）），然后执行相应地指令分支。
+<div class="highlight"><pre><span></span><code><span class="c1">// 如果case只能运行时获取，编译器无法获取，则最坏情况下会造成较大性能损失</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">case</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="no">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">x</span><span class="o">*</span><span class="no">x</span><span class="o">*</span><span class="no">x</span><span class="err">;</span><span class="w"></span>
+<span class="no">else</span><span class="w"></span>
+<span class="w">    </span><span class="no">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">x</span><span class="o">+</span><span class="mi">3</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+束曲发散会导致并行效率的巨大损失，在最坏的情况下，如果出现以下情况，性能实际上会损失 32 倍（束一般设置为32线程），是由于一个线程需要昂贵的分支，而其余的什么也不做。一般开发人员程序端可以选择使用以下优化：如果边界条件便宜，则遍历所有节点并根据边界条件的需要进行分支。如果边界条件很昂贵，推荐拆分为两个CUDA内核（Kernel）。硬件层，NVIDIA Volta 系列的<a href="https://developer.nvidia.com/blog/using-cuda-warp-level-primitives/">独立线程调度（Independent Thread Scheduling）</a>支持从不同分支交叉执行语句。这使得能够执行细粒度并行算法，束（warp）中的线程可以同步和通信。如下图1-5-11所示，Volta 独立线程调度支持从不同分支交叉执行语句。这使得能够执行细粒度并行算法，其中 Warp 中的线程可以同步和通信。虽然软件和硬件层尽可能的规避束发散（Warp Divergence）影响，我们还是看到如图所示其造成部分计算单元在一定时间内的浪费问题，所以问题的本质还是特定的硬件和编程模型适合特定的负载，对负载和硬件执行特点的理解是开掘硬件的计算能力达到软件层优化上限的关键。所以读者可以进一步思考GPU适合什么样的负载，以及局限性？</li>
+</ul>
+<p><center><img src="img/5/5-1-11-interlevedexec.png" ch="500" width="600" height="200"  /></center>
+<center>图1-5-11. 线程交替执行实例 (<a href="https://developer.nvidia.com/blog/using-cuda-warp-level-primitives/">图片引用</a>)</center></p>
+<p>当前问题的并行优化读者可以通过1.5.5中介绍的 <strong><em>阿姆达尔定律的约束</em></strong> 进行思考和分析并行后的加速上限是多少？</p>
+<p><strong>缺陷容忍</strong>：通常认为神经网络具有内置的容错特性（Fault Tolerance Property），主要是因为它们并行（Parallel）结构。 国际神经网络社区直到 1994 年才讨论这些属性，后来这个话题几乎被忽略了。再之后该主题再次被带到讨论中，由于在纳米电子(Nano-Electronic)系统中使用神经网络容错和优雅降级属性将是很重要，例如工作<a href="https://mailman.srv.cs.cmu.edu/pipermail/connectionists/1993-March/014726.html">1</a>,<a href="https://centaur.reading.ac.uk/83583/1/19026776_Ausonio_thesis.pdf#page=42&amp;zoom=100,132,190">2</a>,<a href="https://core.ac.uk/download/pdf/15959758.pdf">3</a>,<a href="http://cee.uma.pt/people/faculty/fernando.morgado/Down/global_model_naun.pdf">4</a>等对此都有所讨论。在学术界, 神经网络芯片在2010年左右开始萌芽。ISCA 2010上，来自法国国立计算机及自动化研究院(INRIA Saclay)的Olivier Temam教授做了<a href="https://pages.saclay.inria.fr/olivier.temam/homepage/ISCA2010web.pdf">"The Rebirth of Neural Networks"</a>的报告，指出了再次指出人工神经网络（Artificial neural network）的缺陷容忍(Defect Tolerance)特点。其提到“<a href="https://pages.saclay.inria.fr/olivier.temam/homepage/ISCA2010web.pdf">缺陷容忍度是 ANN 的一个强项：无需识别/禁用故障部件，训练算法通过在不稳定（不相关）值时降低突触权重来自然/自动地消除故障突触/神经元</a>”。并利用这种特点后续开启了一系列的神经网络加速器工作。这种缺陷容忍（Defect Tolerance）特点的利用不仅在芯片领域，目前已经通过其他不同的方法将其动机拓展到软件层。在计算框架，编译器等部分也常常被作为更为激进优化方式的动机以及可近似优化的保证，例如，稀疏，量化，模型压缩等优化。</p>
+<p>例如，我们可以在深度学习系统的以下相关领域关注到这类特性假设的应用。
+- 硬件层：
+  - 通过线性代数特点和缺陷容忍进行模块精简：例如，GPU或针对人工智能的芯片很多精简指令流水线，采用SIMD的模型，提供更多的算力。
+  - 稀疏性：在NVIDIA最新的H100 GPU中，提供硬件层对稀疏性计算的原生支持。
+  - 量化：在NVIDIA的H100和其他型号GPU中，提供了FP64，FP32，FP16，INT8等不同精度的支持，在准确度允许的范围下，越低精度浮点运算量越大。H100中的变换器引擎（Transformer Engine）分析输出张量的统计信息，了解接下来会出现哪种类型的神经网络层以及什么它需要的精度，变换器引擎（Transformer Engine）在将其存储到内存中之前决定转换哪种目标格式数据类型张量。
+- 软件层：
+  - 稀疏：框架和算法可以根据稀疏性在运行时进行优化，不进行非0计算。
+  - 量化：训练完成的模型可以通过量化进一步精简数据精度。
+  - 模型压缩：训练完成的模型可以通过模型压缩进一步精简模型，降低浮点运算量与内存。
+  - 模型权重的比特缺陷容忍： <a href="https://ieeexplore.ieee.org/document/9556041">Elvis等</a> 层通过检查点变更（Checkpoint Alteration）方式研究深度学习模型软错误敏感性（Soft Error Sensitivity）。实验结果证实流行的深度学习模型通常能够吸收数十个位翻转，而对精度收敛的影响最小。
+  - 弹性训练：框架在节点失效后，不阻塞，继续训练。例如：<a href="https://pytorch.org/docs/stable/elastic/quickstart.html">Torch Elastic</a>。</p>
+<p><strong><em>非确定性（Non-deterministic）与确定性（Deterministic）约束</em></strong></p>
+<p>但是经历以上的优化后，会产生很多非确定性（Non-deterministic），这对调试（Debugging）和安全（Security）都会产生一些新的挑战，所以有些工作(<a href="https://www.cs.purdue.edu/homes/taog/docs/CAIN22.pdf">Xiangzhe等</a>)，会尝试反其道而行之，对有特殊需求的场景（例如，安全与调试），保障深度学习确定性（Deterministic）的执行。从而我们可以看到，单一优化技术本身一般也会产生 <strong><em>副作用（Side Effect）</em></strong> ，当我们了解了各个基础技术后，如何针对现实需求，进行技术设计的权衡取舍（Trade Offs），是我们需要思考的。</p>
+<p>通过以上我们可以看到在深度学习系统中，计算负载的特点本身启发了很多针对深度学习负载本身的系统优化。</p>
+<h2 id="155-parallelamdahls-law">1.5.5 并行（Parallel）加速与阿姆达尔定律（Amdahl's Law）优化上限<a class="headerlink" href="#155-parallelamdahls-law" title="Permanent link">&para;</a></h2>
+<p>由1.5.2我们看到，由于功耗墙和暗硅，硬件逐渐朝着多核多节点设计，这样就天然需要软件层利用算法特点（1.5.4介绍的矩阵运算的并行化机会）做并行化的设计与支持，但是并行化本身的加速不是无限增长的，也有相应的理论约束上限，可以通过本小节介绍的阿姆达尔定律分析。</p>
+<p>深度学习的训练和推理负载可以在多核与多机的硬件下通过利用负载的并行性（Parallelism）进行加速。如图1-5-12所示，假设有三个计算核（Core）可以运行任务，此示例并行执行只需要串行执行的&#8531;时间即可完成。并行的设计思路贯穿于整个技术栈，从最底层的指令，到更高层的跨模型多任务并行，我们在系统设计的各个层次上都能找到并行计算的影子。</p>
+<p><center><img src="img/5/5-1-7-parallelexecution.png" ch="500" width="600" height="400"  /></center>
+<center>图1-5-12. 此示例并行执行只需要串行执行的&#8531;时间即可完成 </center></p>
+<p>例如，在以下的深度学习系统的不同层中，我们都能找到并行加速的影子：
+- 加速器内并行：
+  - 指令级并行：例如当前针对深度学习的加速器很多都是单指令流多数据流(<a href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_data">SIMD</a>)或针对矩阵乘设计的脉动阵列的体系结构，能支持指令级并行与流水线。
+  - 线程级并行：例如在NVIDIA的技术栈中对线程和束（Warp）都提供了并行支持。
+  - 算子内与算子间并行：例如，NVIDIA的技术栈中对CUDA内核（Kernel）级并行CUDA流（Stream），CUDA块（Block）级并行都有支持。
+- 异构加速器间并行：<br />
+  - 例如，框架层<a href="https://www.usenix.org/conference/osdi20/presentation/jiang">BytePS</a>将任务分别部署到CPU与GPU上执行，充分利用两部分算力进行计算。
+- 框架数据加载器并行：
+  - <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">并行和流水线化的数据加载器</a>可以加速深度学习的数据读取。
+- 框架执行单模型并行：
+  - 数据并行(Data Parallelism)：例如，框架<a href="https://github.com/horovod/horovod">Horovod</a>将批次切片，部署多副本模型于各个GPU进行数据并行训练。
+  - 模型并行(Model Parallelism)：例如，框架<a href="https://github.com/microsoft/DeepSpeed">DeepSpeed</a>等将模型切片通过模型并行方式，将计算分布开来。
+  - 流水并行(Pipeline Parallelism)：例如，<a href="https://arxiv.org/abs/1811.06965">GPipe</a>将模型执行的各个阶段物理划分到不同的单元，采用类<a href="https://en.wikipedia.org/wiki/Instruction_pipelining">指令流水线</a>的机制加速执行。
+- 超参数搜索并行：各个超参数组合的模型之前没有依赖关系可以并行执行。
+- 强化学习训练模式并行：多个Agent可以并行执行，模型本身可以并行执行。
+- 推理中的并行：内核内与内核间都有较大的并行执行机会。</p>
+<p>但是并行计算的天花板到底在哪里？如何提前评估并行加速的上限？<a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">阿姆达尔定律</a>就是为回答以上问题而产生。阿姆达尔定律为：$
+S_{latency}(s) = \frac{1}{(1-p) + \frac{p}{s}}
+<span class="arithmatex"><span class="MathJax_Preview">：其中</span><script type="math/tex">：其中</script></span>S_{latency}<span class="arithmatex"><span class="MathJax_Preview">是整个任务执行的理论加速；</span><script type="math/tex">是整个任务执行的理论加速；</script></span>s<span class="arithmatex"><span class="MathJax_Preview">是从改进的系统资源中受益的部分任务的加速；</span><script type="math/tex">是从改进的系统资源中受益的部分任务的加速；</script></span>p$是受益于改进资源的部分最初占用的执行时间的比例。我们可以看到并行加速受限于串行部分，之后的深度学习中，并行过程中的阶段与阶段间的同步点，聚合运算等都是需要一定串行并无法并行的部分。</p>
+<p>如图1-5-13所示，根据阿姆达尔定律，作为执行程序的处理器数量的函数（也可以推广到分布式或者多设备场景进行理论分析），程序执行延迟的理论加速（y轴）。程序的加速受到程序的串行部分的限制。例如，如果 95% 的程序可以并行化（Parallel Portion = 95%），那么理论上使用并行计算的最大加速将是 20 倍（图中绿色曲线所示）。</p>
+<p><center><img src="img/5/5-1-6-AmdahlsLaw.png" ch="500" width="600" height="400"  /></center>
+<center>图1-5-13. 阿姆达尔定律 (<a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">图片引用</a>)</center></p>
+<p>通过阿姆达尔定律我们可以看到如果某段程序只有百分之50%才能优化最终不管怎样增加核最多达到2倍提升上限，继续增加只会让 <strong><em>性价比（Cost Performance）</em></strong> 降低。</p>
+<h2 id="156-redundancydependability">1.5.6 冗余（Redundancy）与可靠性（Dependability）<a class="headerlink" href="#156-redundancydependability" title="Permanent link">&para;</a></h2>
+<p>硬件部署后受外部环境影响（例如，功耗产生的温度提升，所以1.5.2中芯片受到功耗墙约束）或自身的缺陷（Defect），容易出现硬件失效（Failure）进而造成软件失效，虽然深度学习算法负载提供一定的缺陷容忍（1.5.4中介绍），但是在一些算法以外的系统和模块层面为保证整体系统正确执行，不丢失数据或出于调试模型等考虑，也需要设计一定的数据或模型冗余机制进而保证整体系统的可靠性，如图1-5-14所示，那么在深度学习系统的整个技术栈中，常见的一些系统冗余技术实例如下： </p>
+<ul>
+<li>硬件层: 错误检查和纠正，简称ECC（Error Checking and Correcting），例如NVIDIA GPU中就支持相应的<a href="https://docs.nvidia.com/deploy/a100-gpu-mem-error-mgmt/index.html#abstract">内存错误管理</a>以保证缺陷修复与检测。</li>
+<li>框架层：框架的<a href="https://pytorch.org/tutorials/beginner/saving_loading_models.html">模型检查点（Checkpoint）</a>机制，通过备份模型可以让工程师保证系统损坏情况下恢复模型到最近的状态，定期调试训练中的模型。</li>
+<li>平台层：</li>
+<li>元数据：分布式数据库副本机制。例如，深度学习平台的元数据常常存放于<a href="https://etcd.io/">etcd</a>或者<a href="https://zookeeper.apache.org/">ZooKeeper</a>中，这些系统本身是通过多副本机制以及共识协议（Consensus Protocol）保证可靠性的。</li>
+<li>存储：分布式文件系统（例如，<a href="https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS</a>，<a href="https://www.alluxio.io/">Alluxio</a>，<a href="https://azure.microsoft.com/en-us/services/storage/blobs/">Azure Blob</a>等）中的副本机制。</li>
+</ul>
+<p><center><img src="img/5/5-1-5-duplication.png" ch="500" width="600" height="200"  /></center>
+<center>图1-5-14. 副本机制 (<a href="">图片引用</a>)</center></p>
+<p>由于冗余（Redundancy）副本会产生一致性（Consistency）的问题，工程师可以参考经典的分布式系统保持副本一致性的共识（Consensus）协议（例如，<a href="https://en.wikipedia.org/wiki/Paxos_(computer_science)">Paxos</a>，<a href="https://en.wikipedia.org/wiki/Raft_(algorithm)">Raft</a>等）保证新设计的副本系统数据一致和能够做领袖选举（Leader Election）从故障中恢复。</p>
+<p>当然，除了以上一些经典理论，在计算机体系结构（Computer Architecture），系统（System），程序分析（Program Analysis），软件工程（Software Engineering）领域还有大量经典理论值得我们学习和借鉴并在人工智能系统中焕发新的生机。例如，最近的一些工作中，<a href="https://www.usenix.org/conference/osdi20/presentation/zhao-hanyu">HiveD</a>应用经典的<a href="https://en.wikipedia.org/wiki/Buddy_memory_allocation">Buddy memory allocation</a>思想减少碎片，<a href="https://www.microsoft.com/en-us/research/publication/refty-refinement-types-for-valid-deep-learning-models/">Refty</a>应用程序分析中的类型系统理论解决深度学习模型缺陷问题等。面向深度学习设计的新的系统理论，系统算法和系统也将会产生大量的新兴研究与工程实现机会，是一个令人激动人心和值得投身的领域。同时我们也看到，打好计算机基础对从事人工智能系统方向工作与研究至关重要。</p>
+<p>综上所述，人工智能系统本身并不是凭空产生，本身继承了大量经典的系统理论与设计方法，并根据深度学习负载的计算，访存与缺陷容忍等特点进一步开掘新的优化机会。我们将在后面的章节中进一步细节的介绍相关场景下的系统设计与实现。</p>
+<h2 id="_1">小结与讨论<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>本章我们主要围绕计算机领域的经典理论和原则在深度学习系统场景的应用，同时我们也发现深度学习自身的新的特点，并出现了新的系统设计需求和机会。</p>
+<p>请读者读完后面章节后再回看当前章节，并思考随着技术的演进，哪些技术是在变化的，而哪些技术点并没变？</p>
+<h2 id="_2">参考文献<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1tz411z7GN?p=1&amp;share_medium=android&amp;share_plat=android&amp;share_session_id=55501f17-936f-4831-8285-7794c1c4c282&amp;share_source=WEIXIN&amp;share_tag=s_i&amp;timestamp=1649549336&amp;unique_k=DxEcILk">计算机组成与设计：RISC-V</a></li>
+<li><a href="https://docs.nvidia.com/gameworks/content/developertools/desktop/ptx_sass_assembly_debugging.htm">https://docs.nvidia.com/gameworks/content/developertools/desktop/ptx_sass_assembly_debugging.htm</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%91%A9%E5%B0%94%E5%AE%9A%E5%BE%8B">https://zh.wikipedia.org/wiki/%E6%91%A9%E5%B0%94%E5%AE%9A%E5%BE%8B</a></li>
+<li><a href="https://www.tsmc.com/english/news-events/blog-article-20190814">https://www.tsmc.com/english/news-events/blog-article-20190814</a> </li>
+<li><a href="http://www.edwardbosworth.com/My5155_Slides/Chapter01/ThePowerWall.htm">http://www.edwardbosworth.com/My5155_Slides/Chapter01/ThePowerWall.htm</a></li>
+<li><a href="https://docs.nvidia.com/gameworks/content/developertools/desktop/ptx_sass_assembly_debugging.htm">https://docs.nvidia.com/gameworks/content/developertools/desktop/ptx_sass_assembly_debugging.htm</a></li>
+<li><a href="https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html">https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html</a></li>
+<li><a href="https://www.mindshare.com/files/resources/PLX_Choosing_PCIe_Packet_Payload_Size.pdf">https://www.mindshare.com/files/resources/PLX_Choosing_PCIe_Packet_Payload_Size.pdf</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../1.4-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B7%E4%BE%8B%E8%83%8C%E5%90%8E%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1.4-深度学习样例背后的系统问题" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              1.4-深度学习样例背后的系统问题
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F/8.2-%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E7%9A%84%E7%A6%BB%E7%BA%BF%E4%BC%98%E5%8C%96/" class="md-footer__link md-footer__link--next" aria-label="Next: 8.2-模型推理的离线优化" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              8.2-模型推理的离线优化
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.0238f547.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js"></script>
+      
+        <script src="https://cdnjs.loli.net/ajax/libs/pangu/3.3.0/pangu.min.js"></script>
+      
+        <script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
