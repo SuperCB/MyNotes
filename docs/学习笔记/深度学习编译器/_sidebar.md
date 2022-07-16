@@ -1,6 +1,0 @@
-- [Pytorch-Internal](Pytorch-Internal/)
-  - [一个Conv算子的生命历程](Pytorch-Internal/一个Conv算子的生命历程.md)
-  - [Pytorch源码阅读](Pytorch-Internal/Pytorch源码阅读.md)
-- [论文研读](论文研读/)
-  - [DLcompiler综述](论文研读/DLcompiler综述.md)
-- [pyi文件格式](pyi文件格式.md)
