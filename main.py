@@ -95,10 +95,6 @@ if __name__ == '__main__':
                 sider.write('  ' * item[2] + '- ' +'%s : %s' % (item[0], item[1]))
             sider.write('\n')
     
-    
-    # if platform.system().lower() == 'windows':
-    #     main('.\\')
-    # elif platform.system().lower() == 'linux':
-    #     main('./')
+
     
 

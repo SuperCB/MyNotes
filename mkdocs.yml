@@ -48,16 +48,21 @@ markdown_extensions:
     - pymdownx.tasklist:
         custom_checkbox: true
     - pymdownx.tilde
-
-nav : 
-  - Home :
+nav: 
+  - Home:
     - Getting Started : index.md
+  - 论文阅读 :
+    - 机器学习系统 :
+      - OSDI :
+        - Roller(OSDI2022) : 论文阅读/机器学习系统/OSDI/Roller(OSDI2022).md
+      - NNfusion : 论文阅读/机器学习系统/NNfusion.md
   - 学习笔记 :
     - 深入理解Python语言 :
       - Python的C拓展 : 学习笔记/深入理解Python语言/Python的C拓展.md
     - Cuda :
       - Gemm优化 : 学习笔记/Cuda/Gemm优化.md
       - 线程格、线程块与线程 : 学习笔记/Cuda/线程格、线程块与线程.md
+      - 持久化线程(Persistent-Thread) : 学习笔记/Cuda/持久化线程(Persistent-Thread).md
       - im2col : 学习笔记/Cuda/im2col.md
     - 深度学习 :
       - BatchNormalization原理 : 学习笔记/深度学习/BatchNormalization原理.md
@@ -66,9 +71,57 @@ nav :
       - Pytorch-Internal :
         - 一个Conv算子的生命历程 : 学习笔记/深度学习编译器/Pytorch-Internal/一个Conv算子的生命历程.md
         - Pytorch源码阅读 : 学习笔记/深度学习编译器/Pytorch-Internal/Pytorch源码阅读.md
-      - 论文研读 :
-        - DLcompiler综述 : 学习笔记/深度学习编译器/论文研读/DLcompiler综述.md
+      - Learning-Tvm :
+        - d2l-tvm-master :
+          - chapter_cpu_schedules :
+            - vector_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/vector_add.md
+            - broadcast_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/broadcast_add.md
+            - call_overhead : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/call_overhead.md
+            - packed_conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/packed_conv.md
+            - batch_norm : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/batch_norm.md
+            - pooling : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/pooling.md
+            - conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/conv.md
+            - arch : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/arch.md
+            - matmul : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/matmul.md
+            - block_matmul : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/block_matmul.md
+            - depthwise_conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_cpu_schedules/depthwise_conv.md
+          - chapter_getting_started :
+            - from_mxnet : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_getting_started/from_mxnet.md
+            - vector_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_getting_started/vector_add.md
+            - remote : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_getting_started/remote.md
+            - install : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_getting_started/install.md
+          - chapter_expressions :
+            - if_then_else : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/if_then_else.md
+            - reductions : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/reductions.md
+            - all_any : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/all_any.md
+            - index_shape_expressions : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/index_shape_expressions.md
+            - shapes : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/shapes.md
+            - data_types : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_expressions/data_types.md
+          - chapter_gpu_schedules :
+            - vector_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/vector_add.md
+            - broadcast_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/broadcast_add.md
+            - batch_norm : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/batch_norm.md
+            - pooling : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/pooling.md
+            - conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/conv.md
+            - arch : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/arch.md
+            - matmul : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/matmul.md
+            - depthwise_conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_gpu_schedules/depthwise_conv.md
+          - chapter_common_operators :
+            - broadcast_add : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/broadcast_add.md
+            - batch_norm : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/batch_norm.md
+            - pooling : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/pooling.md
+            - conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/conv.md
+            - matmul : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/matmul.md
+            - depthwise_conv : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_common_operators/depthwise_conv.md
+          - chapter_references :
+            - zreferences : 学习笔记/深度学习编译器/Learning-Tvm/d2l-tvm-master/chapter_references/zreferences.md
+        - CPU优化 : 学习笔记/深度学习编译器/Learning-Tvm/CPU优化.md
       - pyi文件格式 : 学习笔记/深度学习编译器/pyi文件格式.md
+    - 程序开发 :
+      - Python程序开发 :
+        - PyGame使用指南 : 学习笔记/程序开发/Python程序开发/PyGame使用指南.md
+      - c语言程序开发 :
+        - c语言语法 : 学习笔记/程序开发/c语言程序开发/c语言语法.md
     - 微软机器学习系统课本 :
       - 11-模型压缩与稀疏化 :
         - 11.2-基于稀疏化的模型压缩 : 学习笔记/微软机器学习系统课本/11-模型压缩与稀疏化/11.2-基于稀疏化的模型压缩.md
@@ -131,18 +184,24 @@ nav :
         - 虚拟化技术 :
           - 如何理解容器？ : 学习笔记/深入理解计算机系统/操作系统/虚拟化技术/如何理解容器？.md
         - MIT6.828课程 :
+          - lab4记录 : 学习笔记/深入理解计算机系统/操作系统/MIT6.828课程/lab4记录.md
           - 神奇的链接 : 学习笔记/深入理解计算机系统/操作系统/MIT6.828课程/神奇的链接.md
           - lab2记录 : 学习笔记/深入理解计算机系统/操作系统/MIT6.828课程/lab2记录.md
-          - 计算机是如何启动的? : 学习笔记/深入理解计算机系统/操作系统/MIT6.828课程/计算机是如何启动的?.md
+        - 中断与异常 : 学习笔记/深入理解计算机系统/操作系统/中断与异常.md
         - Linux中的rootfs : 学习笔记/深入理解计算机系统/操作系统/Linux中的rootfs.md
+        - 页表、页表项 : 学习笔记/深入理解计算机系统/操作系统/页表、页表项.md
+        - 多处理器架构 : 学习笔记/深入理解计算机系统/操作系统/多处理器架构.md
         - linux的内存分配机制 : 学习笔记/深入理解计算机系统/操作系统/linux的内存分配机制.md
+        - x86体系结构 : 学习笔记/深入理解计算机系统/操作系统/x86体系结构.md
+      - Gcc内联汇编 : 学习笔记/深入理解计算机系统/Gcc内联汇编.md
     - C++程序设计 :
       - 深入理解Cmake :
         - add_subdirectory用法 : 学习笔记/C++程序设计/深入理解Cmake/add_subdirectory用法.md
       - 头文件中的尖括号与引号 : 学习笔记/C++程序设计/头文件中的尖括号与引号.md
       - Variant的用法 : 学习笔记/C++程序设计/Variant的用法.md
-    - 应用程序开发 :
-      - Python程序开发 :
-        - PyGame使用指南 : 学习笔记/应用程序开发/Python程序开发/PyGame使用指南.md
     - ACM算法 :
       - Acwing学习记录 : 学习笔记/ACM算法/Acwing学习记录.md
+  - 随想录 :
+    - 万维钢 :
+      - 高中是个把人分类的机器 : 随想录/万维钢/高中是个把人分类的机器.md
+    - 对衡水模式的思考 : 随想录/对衡水模式的思考.md

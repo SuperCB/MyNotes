@@ -1,19 +1,6 @@
 
-    
-<div style="display:flex;justify-content: center; align-items:center;">
-<h1>   欢迎来到CB的博客网站 👋</h1>
-</div>
+# MIT 6.828学习记录
 
- 
-<h2> Picture of the day</h2>
-
-
-<div style="display:flex;justify-content: center; align-items:center;">
-    <img width=400px src="https://"/>
-</div>
-
-
-
-      
-> dsafsdf
++ 大三的时候做ucore做的我一头雾水，ucore的学习材料完全不适合自学，ucore的学习材料根本无法解释清楚复杂的概念
++ 曾经以为难度极高的操作系统实验课，如今实现起来竟然是如此的简单
   

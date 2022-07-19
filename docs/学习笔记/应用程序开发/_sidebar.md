@@ -1,3 +1,0 @@
-- [Python程序开发](Python程序开发/)
-  - [PyGame使用指南](Python程序开发/PyGame使用指南.md)
-- [Java程序开发](Java程序开发/)
